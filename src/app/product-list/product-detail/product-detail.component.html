@@ -1,0 +1,76 @@
+<div class="ekart--product-details--info scroll">
+
+  <div class="ekart-product-detail-close">
+    <i class="fa fa-times" aria-hidden="true"></i>
+  </div>
+
+    <div class="ekart-product-detail-image">
+        <img [src]="product.imageURL" class="ekart-product-detail-image" alt="Product Image">
+    </div>
+    <div class="ekart-product-detail">
+    <div class="ekart-product-detail-name">
+      <h2>{{product.name}}</h2>
+    </div>
+
+    <div class="ekart-product-detail-gbc">
+      <span>{{product.gender}}</span>
+      <span>{{product.brand}}</span>
+      <span>{{product.category}}</span>
+    </div>
+
+    <div class="ekart-product-detail-price">
+      <p>
+        <b>Price Each Pair:&nbsp;</b>
+        <span style="background-color: red; padding:3px 5px; border-radius: 4px; color:white;"><s>₹{{product.price}}</s></span>&nbsp;
+        <span style="background-color: green; padding:3px 5px; border-radius: 4px; color: white;">₹{{product.discountPrice}}</span>&nbsp; (Inclusive of all taxes)
+      </p>
+    </div>
+
+    <div class="ekart-product-detail-size">
+      <div style="padding: 5px 0px; border-bottom: #ccc 2px solid;">
+        <h4>Available Size</h4>
+      </div>
+      <div style="margin-top: 20px;">
+        <span class="ekart-product-detail-available-size">6</span>
+        <span class="ekart-product-detail-available-size">7</span>
+        <span class="ekart-product-detail-available-size">8</span>
+        <span class="ekart-product-detail-available-size">9</span>
+        <span class="ekart-product-detail-available-size">10</span>
+        <span class="ekart-product-detail-available-size">11</span>
+      </div>
+    </div>
+
+    <div class="ekart-product-detail-color">
+      <div style="padding: 5px 0px; border-bottom: #ccc 2px solid;">
+        <h4>Available Color</h4>
+      </div>
+      <div style="margin-top: 20px;">
+         <span 
+            *ngFor="let color of product.color"
+            class="ekart-product-detail-available-color"
+            [ngStyle]="{
+              'background-color': color,
+              'border': color.toLowerCase() === 'white' ? '1px solid black' : '1px solid #ccc'
+            }">
+          </span>
+        <!-- <span class="ekart-product-detail-available-color" style="background-color: red;"></span>
+        <span class="ekart-product-detail-available-color" style="background-color: green;"></span>
+        <span class="ekart-product-detail-available-color" style="background-color: black;"></span>
+        <span class="ekart-product-detail-available-color" style="background-color: blue;"></span> -->
+      </div>
+    </div>
+
+    <div class="ekart-product-detail-desc">
+      <div style="padding: 5px 0px; border-bottom: #ccc 2px solid;">
+        <h4>Description</h4>
+      </div>
+      <div style="margin-top: 20px;">
+        <p>{{product.description}} : </p>
+      </div>
+    </div>
+</div>
+    <div class="ekart-product-detail-addtoCart">
+      <button class="btn-add-to-cart">ADD TO CART</button>
+    </div>
+</div>
+<div class="overlay"></div>

@@ -1,0 +1,54 @@
+.ekart-search {
+    margin: 20px auto;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* space between input and button */
+    flex-wrap: wrap; /* for responsiveness */
+}
+
+.ekart-search-product {
+    width: 40%;
+    height: 5.5vh;
+    padding: 1px 10px;
+    outline: none;
+    border-radius: 2px;
+    background-color: #efefef;
+    border: #28282B 1px solid;
+    font-size: 1rem;
+}
+
+.btn-search,
+.btn-search-disabled {
+    height: 5.5vh;
+    padding: 1px 10px;
+    border: #28282B 1px solid;
+    border-radius: 2px;
+    outline: none;
+    font-size: 1rem;
+    
+}
+
+/* Enabled button style */
+.btn-search {
+    background-color: #28282B;
+    color: #fff;
+    cursor: pointer;
+
+}
+
+.btn-search:hover {
+    background-color: #444;
+}
+
+/* Disabled button style */
+.btn-search-disabled {
+    background-color: #aaa;
+    color: #999;
+    cursor: not-allowed;
+}
+
+.ekart-search-result {
+    padding: 10px 140px;
+    margin: 20px auto;
+}

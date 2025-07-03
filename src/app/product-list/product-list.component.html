@@ -1,0 +1,17 @@
+<div class="product-cont">
+    <!-- <img [src]="product.pImage" width="400px">
+    <p>Name :{{ product.name }}</p>
+    <p>Price :{{ '$'+product.price }}</p>
+    <p>Color :{{ product.color }}</p>
+    <p>Discount :{{ '$' + getDiscount().toFixed(2) }}</p>
+    <p>{{ product.instock > 0 ? 'Only ' + product.instock + ' Items Left' : 'Not in Stock' }}</p> -->
+    <!-- <button [disabled]="!( product.instock > 0)">Buy Now</button>
+    <input (input)="OnNameChange($event)">
+    <p>Name : {{name}}</p> -->
+    <!-- <button (click)="decrementCartValue()">-</button>
+    <span>{{ addToCart }}</span>
+    <button (click)="incrementCartValue()">+</button> -->
+    <app-search (SearchTextChanged)="setSearchText($event)"></app-search>
+    <product-items [searchText]="searchText" #productListComponent></product-items>
+    <product-detail *ngIf="productListComponent.selectedProduct" [productListComp]="productListComponent"></product-detail>
+</div>
