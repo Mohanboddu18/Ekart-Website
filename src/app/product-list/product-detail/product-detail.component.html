@@ -31,12 +31,16 @@
         <h4>Available Size</h4>
       </div>
       <div style="margin-top: 20px;">
-        <span class="ekart-product-detail-available-size">6</span>
+        <span *ngFor="let size of product.size"
+              class="ekart-product-detail-available-size">
+                {{ size }}
+        </span>
+        <!-- <span class="ekart-product-detail-available-size">6</span>
         <span class="ekart-product-detail-available-size">7</span>
         <span class="ekart-product-detail-available-size">8</span>
         <span class="ekart-product-detail-available-size">9</span>
         <span class="ekart-product-detail-available-size">10</span>
-        <span class="ekart-product-detail-available-size">11</span>
+        <span class="ekart-product-detail-available-size">11</span> -->
       </div>
     </div>
 
@@ -70,7 +74,10 @@
     </div>
 </div>
     <div class="ekart-product-detail-addtoCart">
-      <button class="btn-add-to-cart">ADD TO CART</button>
+      <button class="btn-add-to-cart" *ngIf="product.is_in_inventory; else notifyMe">ADD TO CART</button>
+      <ng-template #notifyMe>
+        <button class="btn-add-to-cart">NOTIFY ME</button>
+      </ng-template>
     </div>
 </div>
 <div class="overlay"></div>

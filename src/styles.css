@@ -1,18 +1,63 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #f9f9f9;
+  line-height: 1.5;
+  color: #282828;
+}
+
 a {
-    text-decoration: none;
-    padding: 0px 10px; /* Added missing semicolon */
-    color: #282828;
+  text-decoration: none;
+  padding: 0 10px;
+  color: #282828;
 }
 
-body{
-    font-family: 'Montserrat', sans-serif;
+/* === General Layout Wrapper === */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px;
 }
 
-*{
-    margin: 0px;
-    padding: 0px;
-    box-sizing: border-box;
+/* === Example Flex/Grid Wrapper for Responsive Design === */
+.flex-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.flex-grid .item {
+  flex: 1 1 100%;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* ================================
+   MEDIA QUERIES FOR RESPONSIVENESS
+==================================*/
+
+/* === Tablet (min-width: 768px) === */
+@media (min-width: 768px) {
+  .flex-grid .item {
+    flex: 1 1 45%; /* 2 items per row on tablet */
+  }
+}
+
+/* === Desktop (min-width: 1024px) === */
+@media (min-width: 1024px) {
+  .flex-grid .item {
+    flex: 1 1 30%; /* 3 items per row on desktop */
+  }
 }

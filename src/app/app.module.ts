@@ -10,7 +10,8 @@ import { SearchComponent } from './product-list/search/search.component';
 import { ProductItemsComponent } from './product-list/product-items/product-items.component';
 import { ProductComponent } from './product-list/product-items/product/product.component';
 import { FilterComponent } from './product-list/product-items/filter/filter.component';
-import { ProductDetailComponent } from './product-list/product-detail/product-detail.component'; 
+import { ProductDetailComponent } from './product-list/product-detail/product-detail.component';
+import { FeaturedBrandsComponent } from './product-list/featured-brands/featured-brands.component'; 
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ProductDetailComponent } from './product-list/product-detail/product-de
     ProductItemsComponent,
     ProductComponent,
     FilterComponent,
-    ProductDetailComponent
+    ProductDetailComponent,
+    FeaturedBrandsComponent
   ],
   imports: [
     BrowserModule,

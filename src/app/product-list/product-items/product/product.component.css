@@ -53,6 +53,10 @@
   width: 265px;
   height: 250px;
   object-fit: cover;
+  display: flex;
+  justify-content: center; /* horizontal center */
+  align-items: center;     /* vertical center */ 
+
 }
 
 .ekart--product--name {

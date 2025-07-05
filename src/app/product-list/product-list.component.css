@@ -1,3 +1,117 @@
-.product-cont{
-    padding: 10px 30px; 
+/* Global box sizing and font setup */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Container padding */
+.product-cont {
+  padding: 10px 30px;
+}
+
+/* Featured product section */
+.ekart-featured-products {
+  background-color: #f9f9f9;
+  padding: 20px;
+  overflow: hidden;
+}
+
+/* Heading with blinking animation */
+.ekart-featured-products-heading h3 {
+  font-size: 28px;
+  color: #333;
+  text-align: center;
+  animation: blink 1.2s infinite;
+  margin: 0 0 20px 0;
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* Scrolling buttons container */
+.scroll-buttons {
+  display: inline-block;
+  white-space: nowrap;
+  animation: scroll-left-to-right 12s linear infinite;
+}
+
+.ekart-featured-products:hover .scroll-buttons {
+  animation-play-state: paused;
+}
+
+/* Individual call-to-action buttons */
+.call-to-action {
+  display: inline-block;
+  margin-right: 20px;
+  padding: 10px 25px;
+  background-color: #2196F3;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.3s ease-in-out;
+}
+
+.call-to-action:hover {
+  transform: scale(1.1);
+}
+
+/* Scrolling animation keyframes */
+@keyframes scroll-left-to-right {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+  .ekart-featured-products-heading h3 {
+    font-size: 24px;
+  }
+
+  .call-to-action {
+    font-size: 15px;
+    padding: 9px 20px;
+    margin-right: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ekart-featured-products-heading h3 {
+    font-size: 20px;
+  }
+
+  .call-to-action {
+    font-size: 14px;
+    padding: 8px 16px;
+    margin-right: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ekart-featured-products-heading h3 {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .call-to-action {
+    font-size: 13px;
+    padding: 7px 12px;
+    margin-right: 10px;
+  }
 }
