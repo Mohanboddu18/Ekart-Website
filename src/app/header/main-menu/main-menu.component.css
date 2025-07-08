@@ -1,8 +1,26 @@
 .ekart-menu {
-    padding: 1vh 1vh; /* Removed duplicate 'padding-top' */
+    padding: 1vh;
     color: #36454F;
     font-family: 'Montserrat', sans-serif;
-    font-size: 16px; /* Corrected from font-weight: 16px */
-    width: 70%;
-    text-align: center;
+    font-size: clamp(12px, 2vw, 18px);
+    width: 100%;
+    white-space: nowrap;
+
+    display: flex;
+    flex-wrap: nowrap; /* 👈 Don't allow wrapping */
+    overflow-x: auto;   /* 👈 Allow horizontal scrolling */
+    gap: 0.5em;
+    box-sizing: border-box;
+    scrollbar-width: none; /* Firefox */
+}
+
+.ekart-menu::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+}
+
+.ekart-menu a {
+    text-decoration: none;
+    color: inherit;
+    padding: 0.4em 0.7em;
+    flex: 0 0 auto; /* 👈 Prevent shrinking */
 }

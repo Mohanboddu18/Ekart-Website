@@ -16,5 +16,6 @@ export class ProductDetailComponent {
   ngOnInit(){
     this.product = this.productListComp.selectedProduct; 
   }
+  
 
 }

@@ -1,8 +1,58 @@
-.filter-container{
-    margin: 10px 0px;
-    padding: 0px 20vh;
+.filter-container {
+    margin: 10px 0;
+    padding: 0 20vh;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    color: #36454F;
 }
-input[type-ratio]{
+
+.filter-container input[type="radio"] {
     margin-left: 10px;
     margin-right: 5px;
+}
+
+/* ✅ Tablet (768px and below) */
+@media screen and (max-width: 768px) {
+    .filter-container {
+        padding: 0 4vh;
+        font-size: 15px;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+}
+
+/* ✅ Mobile (480px and below) */
+@media screen and (max-width: 480px) {
+    .filter-container {
+        flex-direction: row;
+        align-items: flex-start;
+        padding: 0 2vh;
+        font-size: 14px;
+        gap: 3px;
+    }
+
+    .filter-container span {
+        display: block;
+    }
+}
+
+/* ✅ Extra-Narrow Mobile (300x650) */
+@media screen and (max-width: 320px) {
+    .filter-container {
+        padding: 0 1vh;
+        font-size: 13px;
+        gap: 4px;
+    }
+
+    .filter-container span {
+        display: block;
+    }
+
+    .filter-container input[type="radio"] {
+        margin: 4px 6px 0 0;
+    }
 }
