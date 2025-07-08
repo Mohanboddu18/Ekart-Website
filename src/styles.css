@@ -61,3 +61,8 @@ a {
     flex: 1 1 30%; /* 3 items per row on desktop */
   }
 }
+
+
+body.modal-open {
+  overflow: hidden;
+}

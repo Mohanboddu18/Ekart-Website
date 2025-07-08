@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Product } from 'src/app/Modals/Product';
 import { ProductItemsComponent } from '../product-items/product-items.component';
 
@@ -9,13 +9,29 @@ import { ProductItemsComponent } from '../product-items/product-items.component'
 })
 export class ProductDetailComponent {
 
-  @Input() productListComp: ProductItemsComponent = undefined;
+  // @Input() productListComp: ProductItemsComponent = undefined;
+  @Input() product: Product;
+@Output() closeModal = new EventEmitter<void>();
 
-  product: Product;
+ngOnInit() {
+  document.body.classList.add('modal-open');
+}
 
-  ngOnInit(){
-    this.product = this.productListComp.selectedProduct; 
-  }
+ngOnDestroy() {
+  document.body.classList.remove('modal-open');
+}
+
+onClose() {
+  this.closeModal.emit();
+}
+
+
+  // product: Product;
+
+  // ngOnInit(){
+  //   this.product = this.productListComp.selectedProduct; 
+  // }
+  
   
 
 }

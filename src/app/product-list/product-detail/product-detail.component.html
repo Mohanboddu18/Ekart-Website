@@ -1,6 +1,6 @@
 <div class="ekart--product-details--info scroll">
 
-  <div class="ekart-product-detail-close">
+  <div class="ekart-product-detail-close" (click)="onClose()">
     <i class="fa fa-times" aria-hidden="true"></i>
   </div>
 
@@ -80,4 +80,4 @@
       </ng-template>
     </div>
 </div>
-<div class="overlay"></div>
+<div class="overlay" (click)="onClose()"></div>

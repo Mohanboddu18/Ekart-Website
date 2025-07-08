@@ -1,5 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
-import { ProductItemsComponent } from './product-items/product-items.component';
+import { Component } from '@angular/core';
+import { Product } from 'src/app/Modals/Product'; // Make sure this path is correct
 
 @Component({
   selector: 'product-list',
@@ -7,38 +7,25 @@ import { ProductItemsComponent } from './product-items/product-items.component';
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent {
-  // name = "Mohan";
-  // addToCart : number=0;
-  // product ={
-  //   name : 'Iphone 13',
-  //   price : 799,
-  //   color : 'Black',
-  //   Discount : 8.5,
-  //   instock : 5,
-  //   pImage : '/assets/images/iphone.png'
-  // }
-  // getDiscount(){
-  //   return this.product.price-(this.product.price * this.product.Discount / 100)
-  // }
-  // OnNameChange(event : any){
-  //   // this.name= event.target.value;
-  // }
-  // decrementCartValue(){
-  //   if(this.addToCart>0){
-  //     this.addToCart--;
-  //   }
-  // }
-  // incrementCartValue(){
-  //   if(this.addToCart < this.product.instock){
-  //     this.addToCart++;
-  //   }
-  // }
+  searchText: string = '';
 
-  searchText : string =''
+  // Holds the selected product for the detail modal
+  selectedProduct: Product | null = null;
 
-  @ViewChild(ProductItemsComponent)  productListComponent: ProductItemsComponent
-
-  setSearchText( value: string){
+  // Called when user types in the search box
+  setSearchText(value: string) {
     this.searchText = value;
+  }
+
+  // Called when a product is clicked in product-items
+  openProductDetail(product: Product) {
+    this.selectedProduct = product;
+    document.body.classList.add('modal-open'); // optional: disables background scroll
+  }
+
+  // Called when X button in product-detail is clicked
+  closeProductDetail() {
+    this.selectedProduct = null;
+    document.body.classList.remove('modal-open'); // optional: re-enable scroll
   }
 }

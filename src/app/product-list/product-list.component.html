@@ -1,32 +1,29 @@
 <div class="product-cont">
-    <!-- <img [src]="product.pImage" width="400px">
-    <p>Name :{{ product.name }}</p>
-    <p>Price :{{ '$'+product.price }}</p>
-    <p>Color :{{ product.color }}</p>
-    <p>Discount :{{ '$' + getDiscount().toFixed(2) }}</p>
-    <p>{{ product.instock > 0 ? 'Only ' + product.instock + ' Items Left' : 'Not in Stock' }}</p> -->
-    <!-- <button [disabled]="!( product.instock > 0)">Buy Now</button>
-    <input (input)="OnNameChange($event)">
-    <p>Name : {{name}}</p> -->
-    <!-- <button (click)="decrementCartValue()">-</button>
-    <span>{{ addToCart }}</span>
-    <button (click)="incrementCartValue()">+</button> -->
-    <app-search (SearchTextChanged)="setSearchText($event)"></app-search>
-    <product-items [searchText]="searchText" #productListComponent></product-items>
-    <product-detail *ngIf="productListComponent.selectedProduct" [productListComp]="productListComponent"></product-detail>
 
+  <app-search (SearchTextChanged)="setSearchText($event)"></app-search>
 
-    <div class="ekart-featured-products">
-  <div class="ekart-featured-products-heading">
-    <h3>Latest Arrivals in Popular Brands</h3>
+  <product-items 
+    [searchText]="searchText" 
+    (productSelected)="openProductDetail($event)">
+  </product-items>
+
+  <product-detail 
+    *ngIf="selectedProduct"
+    [product]="selectedProduct"
+    (closeModal)="closeProductDetail()">
+  </product-detail>
+
+  <div class="ekart-featured-products">
+    <div class="ekart-featured-products-heading">
+      <h3>Latest Arrivals in Popular Brands</h3>
+    </div>
+
+    <div class="scroll-buttons">
+      <button class="call-to-action">New Arrivals in PUMA</button>
+      <button class="call-to-action">New Arrivals in ADIDAS</button>
+      <button class="call-to-action">New Arrivals in REEBOK</button>
+      <button class="call-to-action">New Arrivals in ASICS</button>
+    </div>
   </div>
-
-  <div class="scroll-buttons">
-    <button class="call-to-action">New Arrivals in PUMA</button>
-    <button class="call-to-action">New Arrivals in ADIDAS</button>
-    <button class="call-to-action">New Arrivals in REEBOK</button>
-    <button class="call-to-action">New Arrivals in ASICS</button>
-  </div>
-</div>
 
 </div>

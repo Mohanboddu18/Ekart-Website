@@ -1,12 +1,16 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Product } from 'src/app/Modals/Product';
+
 @Component({
   selector: 'product-items',
   templateUrl: './product-items.component.html',
   styleUrls: ['./product-items.component.css']
 })
 export class ProductItemsComponent {
-  selectedProduct : Product;
+  @Input() searchText: string = '';
+  @Output() productSelected = new EventEmitter<Product>();
+
+  selectedFilterRadioButton: string = 'all';
   products =[
     {
     id: 1,
@@ -249,22 +253,29 @@ imageURL: "https://shopcgx.com/cdn/shop/files/AURORA_DJ6158-300_PHSRH000-2000.jp
 slug: "nike-react-infinity-run-flyknit"
   },
 ];
-  
+ 
   totalProductsCount = this.products.length;
-  productInStock = this.products.filter(p =>p.is_in_inventory === true).length;
-  productOutOfStock = this.products.filter(p =>p.is_in_inventory === false).length;
-
-  @Input()
-  searchText : string = '';
-
-
-  selectedFilterRadioButton: string = 'all';
+  productInStock = this.products.filter(p => p.is_in_inventory).length;
+  productOutOfStock = this.products.filter(p => !p.is_in_inventory).length;
 
   onFilterChanged(value: string) {
     this.selectedFilterRadioButton = value;
   }
-  viewProduct(product: any) {
-    this.selectedProduct = product;
+
+  viewProduct(product: Product) {
+    this.productSelected.emit(product);
   }
 
+  get filteredProducts(): Product[] {
+    return this.products.filter(prod => {
+      const matchSearch =
+        this.searchText === '' || prod.name.toLowerCase().includes(this.searchText.toLowerCase());
+      const matchFilter =
+        this.selectedFilterRadioButton === 'all' ||
+        (this.selectedFilterRadioButton === 'inStock' && prod.is_in_inventory) ||
+        (this.selectedFilterRadioButton === 'outOfStock' && !prod.is_in_inventory);
+
+      return matchSearch && matchFilter;
+    });
+  }
 }
