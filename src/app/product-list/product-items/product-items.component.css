@@ -2,5 +2,12 @@
   margin: 20px auto;
   display: flex;
   flex-wrap: wrap;
-  padding: 0px 22vh;
+  justify-content: center; /* Centers children */
+  gap: 1.5rem; /* Add spacing between products */
+
+  padding-left: clamp(1rem, 5vw, 10%);
+  padding-right: clamp(1rem, 5vw, 10%);
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1440px; /* Optional max limit for large screens */
 }
