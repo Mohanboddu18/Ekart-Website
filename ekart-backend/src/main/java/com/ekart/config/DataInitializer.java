@@ -60,7 +60,7 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     private void seedProducts() {
-        // Force refresh products on startup so updated image URLs in data.sql / DataInitializer are always applied!
+        // Clear old database table and seed user's exact custom image URLs
         productRepository.deleteAll();
 
         List<Product> products = Arrays.asList(
@@ -110,7 +110,7 @@ public class DataInitializer implements CommandLineRunner {
                 .description("Premium cotton crewneck t-shirt with classic triple stripe styling.")
                 .brand("ADIDAS").gender("MEN").category("CASUAL").sizes("40,42,44,46").colors("white,Red,Black")
                 .price(1899.0).discountPrice(1399.0).isInInventory(false).itemsLeft(0)
-                .imageURL("https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop&q=80")
+                .imageURL("https://assets.ajio.com/medias/sys_master/root/20250424/4Lug/6809ebf955340d4b4ff709c5/-473Wx593H-442882577-black-MODEL.jpg")
                 .slug("adidas-casual-tshirt").build(),
 
             Product.builder().name("Puma Sports Wear")
@@ -131,7 +131,7 @@ public class DataInitializer implements CommandLineRunner {
                 .description("Cute compact backpack designed for young women and college essentials.")
                 .brand("PUMA").gender("GIRLS").category("COLLEGE").sizes("20,25,30,40").colors("white,Pink,Black")
                 .price(859.0).discountPrice(629.0).isInInventory(false).itemsLeft(0)
-                .imageURL("https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600&auto=format&fit=crop&q=80")
+                .imageURL("https://assets.ajio.com/medias/sys_master/root/20240529/BLrO/6656cd1805ac7d77bb879856/-473Wx593H-469618436-pink-MODEL.jpg")
                 .slug("puma-girls-stylish-bag").build(),
 
             Product.builder().name("Adidas React Party Wear")
@@ -180,7 +180,7 @@ public class DataInitializer implements CommandLineRunner {
                 .description("Hard-shell expandable spinner luggage bag for international travel.")
                 .brand("WENGER").gender("MEN").category("CASUAL").sizes("40,50,60,70").colors("Pink,White,Black")
                 .price(1499.0).discountPrice(1099.0).isInInventory(false).itemsLeft(0)
-                .imageURL("https://images.unsplash.com/photo-1565026057447-b88e40bc2b2a?w=600&auto=format&fit=crop&q=80")
+                .imageURL("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRC7KR4OpNkbizJ6XseE0deoflAsbR0i-dUehs6tv5tKA&s")
                 .slug("wenger-trolly-bag").build(),
 
             Product.builder().name("Men's Fastrack Watches")
@@ -201,7 +201,7 @@ public class DataInitializer implements CommandLineRunner {
                 .description("Luxury women's silver dial timepiece with mesh strap.")
                 .brand("AMALFI").gender("WOMEN").category("CASUAL").sizes("40,42,44,46,48").colors("white,Gray,Black")
                 .price(1249.0).discountPrice(899.0).isInInventory(true).itemsLeft(6)
-                .imageURL("https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=600&auto=format&fit=crop&q=80")
+                .imageURL("https://www.furorewatches.com/cdn/shop/products/FU1403_diagonal.jpg?v=1678971850")
                 .slug("amalfi-silver-watch").build(),
 
             Product.builder().name("Puma Travel Bag")
@@ -215,7 +215,7 @@ public class DataInitializer implements CommandLineRunner {
                 .description("Slim fit stretch denim jeans with classic 5-pocket styling.")
                 .brand("LEVIS").gender("MEN").category("CASUAL").sizes("30,32,34,36").colors("white,Red,Black")
                 .price(899.0).discountPrice(1099.0).isInInventory(false).itemsLeft(0)
-                .imageURL("https://images.unsplash.com/photo-1542272604-780c36856d67?w=600&auto=format&fit=crop&q=80")
+                .imageURL("https://images.jdmagicbox.com/quickquotes/images_main/men-denim-baggy-jeans-grey-28-36-2227181052-r8o8rq0a.jpg")
                 .slug("mens-fashion-jeans").build(),
 
             Product.builder().name("Puma Womens Tshirt")
@@ -236,7 +236,7 @@ public class DataInitializer implements CommandLineRunner {
                 .description("Sandalwood and turmeric skin care bath soap pack.")
                 .brand("SANTOOR").gender("MEN").category("SOAP").sizes("30,50,100,125").colors("white,Pink,Orange")
                 .price(159.0).discountPrice(129.0).isInInventory(false).itemsLeft(0)
-                .imageURL("https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?w=600&auto=format&fit=crop&q=80")
+                .imageURL("https://cdn.ewshopping.com/uploads/product/36e1905f-8586-4575-9508-b439610e48a4.webp")
                 .slug("santoor-soap").build(),
 
             Product.builder().name("Water Bottle Milton")
@@ -250,14 +250,14 @@ public class DataInitializer implements CommandLineRunner {
                 .description("BPA-free leakproof insulated lunch box container with cutlery.")
                 .brand("ISTOCK").gender("MEN").category("CASUAL").sizes("500,750").colors("Green,Blue,Black")
                 .price(1039.0).discountPrice(869.0).isInInventory(false).itemsLeft(3)
-                .imageURL("https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?w=600&auto=format&fit=crop&q=80")
+                .imageURL("https://m.media-amazon.com/images/I/714+n-gCAWL.jpg")
                 .slug("lunch-box-on-white").build(),
 
             Product.builder().name("Girls Dress Kids")
                 .description("Festive floral embroidered cotton dress for young girls.")
                 .brand("ITAMY").gender("KIDS").category("CASUAL").sizes("40,42,44,46").colors("white,Gray,Pink")
                 .price(1949.0).discountPrice(1299.0).isInInventory(true).itemsLeft(3)
-                .imageURL("https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?w=600&auto=format&fit=crop&q=80")
+                .imageURL("https://5.imimg.com/data5/ANDROID/Default/2025/12/569893134/PU/GX/CO/36939600/product-jpeg-500x500.jpg")
                 .slug("girls-dress-kids").build(),
 
             Product.builder().name("Men's Adidas Precision Pro")

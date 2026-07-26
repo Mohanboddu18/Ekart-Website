@@ -139,7 +139,7 @@ export class ProductItemsComponent implements OnInit {
         brand: "ADIDAS", gender: "MEN", category: "CASUAL", 
         size: [40, 42, 44, 46], color: ["white", "Red", "Black"],
         price: 1899, discountPrice: 1399, is_in_inventory: false, items_left: 0,
-        imageURL: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop&q=80", 
+        imageURL: "https://assets.ajio.com/medias/sys_master/root/20250424/4Lug/6809ebf955340d4b4ff709c5/-473Wx593H-442882577-black-MODEL.jpg", 
         slug: "adidas-casual-tshirt"
       },
       {
@@ -169,7 +169,7 @@ export class ProductItemsComponent implements OnInit {
         brand: "PUMA", gender: "GIRLS", category: "COLLEGE", 
         size: [20, 25, 30, 40], color: ["white", "Pink", "Black"],
         price: 859, discountPrice: 629, is_in_inventory: false, items_left: 0,
-        imageURL: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600&auto=format&fit=crop&q=80", 
+        imageURL: "https://assets.ajio.com/medias/sys_master/root/20240529/BLrO/6656cd1805ac7d77bb879856/-473Wx593H-469618436-pink-MODEL.jpg", 
         slug: "puma-girls-stylish-bag"
       },
       {
@@ -239,7 +239,7 @@ export class ProductItemsComponent implements OnInit {
         brand: "WENGER", gender: "MEN", category: "CASUAL", 
         size: [40, 50, 60, 70], color: ["Pink", "White", "Black"],
         discountPrice: 1099, price: 1499, is_in_inventory: false, items_left: 0,
-        imageURL: "https://images.unsplash.com/photo-1565026057447-b88e40bc2b2a?w=600&auto=format&fit=crop&q=80", 
+        imageURL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRC7KR4OpNkbizJ6XseE0deoflAsbR0i-dUehs6tv5tKA&s", 
         slug: "wenger-trolly-bag"
       },
       {
@@ -269,7 +269,7 @@ export class ProductItemsComponent implements OnInit {
         brand: "AMALFI", gender: "WOMEN", category: "CASUAL", 
         size: [40, 42, 44, 46, 48], color: ["white", "Gray", "Black"],
         price: 1249, discountPrice: 899, is_in_inventory: true, items_left: 6,
-        imageURL: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=600&auto=format&fit=crop&q=80", 
+        imageURL: "https://www.furorewatches.com/cdn/shop/products/FU1403_diagonal.jpg?v=1678971850", 
         slug: "amalfi-silver-watch"
       },
       {
@@ -289,7 +289,7 @@ export class ProductItemsComponent implements OnInit {
         brand: "LEVIS", gender: "MEN", category: "CASUAL", 
         size: [30, 32, 34, 36], color: ["white", "Red", "Black"],
         price: 899, discountPrice: 1099, is_in_inventory: false, items_left: 0,
-        imageURL: "https://images.unsplash.com/photo-1542272604-780c36856d67?w=600&auto=format&fit=crop&q=80", 
+        imageURL: "https://images.jdmagicbox.com/quickquotes/images_main/men-denim-baggy-jeans-grey-28-36-2227181052-r8o8rq0a.jpg", 
         slug: "mens-fashion-jeans"
       },
       {
@@ -319,7 +319,7 @@ export class ProductItemsComponent implements OnInit {
         brand: "SANTOOR", gender: "MEN", category: "SOAP", 
         size: [30, 50, 100, 125], color: ["white", "Pink", "Orange"],
         price: 159, discountPrice: 129, is_in_inventory: false, items_left: 0,
-        imageURL: "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?w=600&auto=format&fit=crop&q=80", 
+        imageURL: "https://cdn.ewshopping.com/uploads/product/36e1905f-8586-4575-9508-b439610e48a4.webp", 
         slug: "santoor-soap"
       },
       {
@@ -339,7 +339,7 @@ export class ProductItemsComponent implements OnInit {
         brand: "ISTOCK", gender: "MEN", category: "CASUAL", 
         size: [500, 750], color: ["Green", "Blue", "Black"],
         price: 1039, discountPrice: 869, is_in_inventory: false, items_left: 3,
-        imageURL: "https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?w=600&auto=format&fit=crop&q=80", 
+        imageURL: "https://m.media-amazon.com/images/I/714+n-gCAWL.jpg", 
         slug: "lunch-box-on-white"
       },
       {
@@ -349,7 +349,7 @@ export class ProductItemsComponent implements OnInit {
         brand: "ITAMY", gender: "KIDS", category: "CASUAL", 
         size: [40, 42, 44, 46], color: ["white", "Gray", "Pink"],
         price: 1949, discountPrice: 1299, is_in_inventory: true, items_left: 3,
-        imageURL: "https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?w=600&auto=format&fit=crop&q=80", 
+        imageURL: "https://5.imimg.com/data5/ANDROID/Default/2025/12/569893134/PU/GX/CO/36939600/product-jpeg-500x500.jpg", 
         slug: "girls-dress-kids"
       },
       {
