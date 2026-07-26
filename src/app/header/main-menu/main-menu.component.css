@@ -17,3 +17,16 @@
   color: #0284C7;
   border-bottom-color: #0284C7;
 }
+
+@media (max-width: 768px) {
+  .ekart-menu {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .ekart-menu a {
+    font-size: 1rem;
+    padding: 8px 0;
+    border-bottom: 1px solid #F1F5F9;
+  }
+}

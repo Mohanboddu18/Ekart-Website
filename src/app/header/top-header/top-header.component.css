@@ -79,3 +79,26 @@
 .logout-link:hover {
   text-decoration: underline;
 }
+
+@media (max-width: 768px) {
+  .top-header-container {
+    justify-content: flex-start;
+    padding: 6px 12px;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .top-header-container::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .top-nav-links {
+    gap: 0.8rem;
+    font-size: 0.78rem;
+  }
+
+  .top-nav-links a {
+    flex-shrink: 0;
+  }
+}

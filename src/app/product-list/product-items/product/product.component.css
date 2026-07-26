@@ -145,3 +145,53 @@
   align-self: flex-start;
   background: #F8FAFC;
 }
+
+@media (max-width: 600px) {
+  .ekart--product--item {
+    padding: 0.7rem;
+    border-radius: 12px;
+  }
+
+  .ekart--product--image {
+    height: 130px;
+    margin-bottom: 0.5rem;
+    padding: 4px;
+  }
+
+  .ekart--product--image img {
+    max-height: 115px;
+  }
+
+  .ekart--add-to-price {
+    font-size: 1rem;
+    height: 22px;
+    gap: 4px;
+  }
+
+  .old-price-tag {
+    font-size: 0.75rem;
+  }
+
+  .ekart--product--name {
+    font-size: 0.82rem;
+    height: 2.5em;
+    margin-bottom: 0.2rem;
+  }
+
+  .ekart--product--category {
+    font-size: 0.68rem;
+    height: 16px;
+    margin-bottom: 0.2rem;
+  }
+
+  .ekart--product--available-colors {
+    font-size: 0.7rem;
+    height: 16px;
+    margin-bottom: 0.4rem;
+  }
+
+  .ekart-product-stock {
+    font-size: 0.7rem;
+    padding: 3px 8px;
+  }
+}

@@ -1,58 +1,38 @@
 .filter-container {
-    margin: 10px 0;
-    padding: 0 20vh;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 16px;
+    margin: 15px auto;
+    padding: 0 5%;
+    max-width: 1440px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 10px;
-    color: #36454F;
+    justify-content: center;
+    gap: 12px;
+    color: #334155;
+    box-sizing: border-box;
+}
+
+.filter-container span {
+    font-weight: 700;
+    color: #0F172A;
 }
 
 .filter-container input[type="radio"] {
-    margin-left: 10px;
-    margin-right: 5px;
+    margin-right: 6px;
+    accent-color: #0284C7;
+    cursor: pointer;
 }
 
-/* ✅ Tablet (768px and below) */
-@media screen and (max-width: 768px) {
+.filter-container label {
+    cursor: pointer;
+    font-weight: 500;
+}
+
+@media (max-width: 600px) {
     .filter-container {
-        padding: 0 4vh;
-        font-size: 15px;
-        flex-wrap: wrap;
+        padding: 0 12px;
+        font-size: 0.85rem;
         gap: 8px;
-    }
-}
-
-/* ✅ Mobile (480px and below) */
-@media screen and (max-width: 480px) {
-    .filter-container {
-        flex-direction: row;
-        align-items: flex-start;
-        padding: 0 2vh;
-        font-size: 14px;
-        gap: 3px;
-    }
-
-    .filter-container span {
-        display: block;
-    }
-}
-
-/* ✅ Extra-Narrow Mobile (300x650) */
-@media screen and (max-width: 320px) {
-    .filter-container {
-        padding: 0 1vh;
-        font-size: 13px;
-        gap: 4px;
-    }
-
-    .filter-container span {
-        display: block;
-    }
-
-    .filter-container input[type="radio"] {
-        margin: 4px 6px 0 0;
     }
 }

@@ -6,10 +6,23 @@
 
     <!-- MAIN BAR - LOGO ON TOP-LEFT, MENU ON TOP-RIGHT -->
     <div class="main-header-bar">
-        <div class="app-header-logo" routerLink="/home">
+        <div class="app-header-logo" routerLink="/home" (click)="closeMobileMenu()">
             eKart
         </div>
-        <div class="app-header-menu">
+
+        <div class="desktop-header-menu">
+            <main-menu></main-menu>
+        </div>
+
+        <!-- MOBILE HAMBURGER TOGGLE BUTTON -->
+        <button class="mobile-hamburger-btn" (click)="toggleMobileMenu()" aria-label="Toggle Navigation Menu">
+            <i class="fa" [ngClass]="isMobileMenuOpen ? 'fa-times' : 'fa-bars'"></i>
+        </button>
+    </div>
+
+    <!-- MOBILE DRAWER MENU -->
+    <div class="mobile-drawer-menu" [class.open]="isMobileMenuOpen">
+        <div (click)="closeMobileMenu()">
             <main-menu></main-menu>
         </div>
     </div>
