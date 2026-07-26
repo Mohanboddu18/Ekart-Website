@@ -1,5 +1,6 @@
 package com.ekart.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -39,10 +40,19 @@ public class Product {
 
     private Integer itemsLeft;
 
-    @Column(length = 1000)
+    @JsonProperty("imageURL")
+    @Column(name = "imageurl", length = 1000)
     private String imageURL;
 
     private String slug;
+
+    public String getImageurl() {
+        return imageURL;
+    }
+
+    public void setImageurl(String imageurl) {
+        this.imageURL = imageurl;
+    }
 
     // Transient helper methods for JSON response matching Angular Product interface
     public Integer[] getSizeArray() {

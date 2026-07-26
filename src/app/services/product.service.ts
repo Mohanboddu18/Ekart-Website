@@ -15,6 +15,9 @@ export class ProductService {
   public normalizeProduct(p: any): Product {
     if (!p) return p;
 
+    // Robust imageURL extraction
+    const img = p.imageURL || p.imageurl || p.imageUrl || 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop&q=80';
+
     // Handle color array vs colors string
     let colorArray: string[] = [];
     if (Array.isArray(p.color) && p.color.length > 0) {
@@ -44,6 +47,8 @@ export class ProductService {
 
     return {
       ...p,
+      imageURL: img,
+      imageurl: img,
       color: colorArray,
       size: sizeArray,
       is_in_inventory: inStock,
