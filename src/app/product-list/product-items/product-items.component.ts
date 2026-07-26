@@ -1,502 +1,50 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Product } from 'src/app/Modals/Product';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'product-items',
   templateUrl: './product-items.component.html',
   styleUrls: ['./product-items.component.css']
 })
-export class ProductItemsComponent {
+export class ProductItemsComponent implements OnInit {
   @Input() searchText: string = '';
   @Output() productSelected = new EventEmitter<Product>();
 
   selectedFilterRadioButton: string = 'all';
-  products =[
-    {
-    id: 1,
-    name: "Nike React Infinity Run Flyknit",
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-brand: "NIKE",
-gender: "MEN",
-category: "RUNNING", 
-size: [6, 7, 8, 9, 10],
-color: ["white", "Blue", "Black"],
-price: 1299,
-discountPrice : 899,
-is_in_inventory: true,
-items_left: 6,
-imageURL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSL7v5qwkXDHAkzLm7cra136dR7EnADq1Nqdg&s", 
-slug: "nike-react-infinity-run-flyknit"
-  },
-  {
-    id: 2,
-    name: "Adidas Stylish Shoes",
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-brand: "ADIDAS",
-gender: "MEN",
-category: "CASUAL", 
-size: [7,8, 9, 10],
-color: ["Pink", "White", "Black"],
-discountPrice : 1099,
-price: 1499,
-is_in_inventory: false,
-items_left: 0,
-imageURL: "https://img.tatacliq.com/images/i18//437Wx649H/MP000000022902708_437Wx649H_202407131602401.jpeg", 
-slug: "nike-react-infinity-run-flyknit"
-  },
-  {
-    id: 3,
-    name: "Puma Mens Sneakers",
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-brand: "PUMA",
-gender: "MEN",
-category: "CASUAL", 
-size: [6, 7, 8, 9],
-color: ["Gray", "White", "Black"],
-price: 999,
-discountPrice : 769,
-is_in_inventory: true,
-items_left: 4,
-imageURL: "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_300,h_300/global/394371/03/sv01/fnd/IND/fmt/png/Smashic-Comfort-Casual-Sneakers", 
-slug: "nike-react-infinity-run-flyknit"
-  },
-  {
-    id: 4,
-    name: "Puma Stylish Sneaker",
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-brand: "PUMA",
-gender: "MEN",
-category: "RUNNING", 
-size: [6, 7, 8, 9, 10,11],
-color: ["Yellow", "Olive", "Black"],
-price: 1699,
-discountPrice : 1299,
-is_in_inventory: true,
-items_left: 8,
-imageURL: "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_300,h_300/global/395111/04/sv01/fnd/IND/fmt/png/Smashic-Women's-Comfort-Casual-Sneakers", 
-slug: "nike-react-infinity-run-flyknit"
-  },
-  {
-    id: 5,
-    name: "Adidas Gym Wear",
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-brand: "ADIDAS",
-gender: "MEN",
-category: "GYM", 
-size: [40, 42, 44, 46, 48],
-color: ["white", "Gray", "Black"],
-price: 1249,
-discountPrice : 899,
-is_in_inventory: true,
-items_left: 6,
-imageURL: "https://soneesports.com/cdn/shop/products/IM2528_3_APPAREL_On_Model_Standard_View_white.jpg?v=1706465337", 
-slug: "nike-react-infinity-run-flyknit"
-  },
-  {
-    id: 6,
-    name: "Puma College Bag",
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-brand: "PUMA",
-gender: "MEN",
-category: "COLLEGE", 
-size: [20, 25, 30, 40],
-color: ["white", "Olive", "Black"],
-price: 899,
-discountPrice : 659,
-is_in_inventory: false,
-items_left: 0,
-imageURL: "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_2000,h_2000/global/079392/03/fnd/IND/fmt/png/School-Backpack", 
-slug: "nike-react-infinity-run-flyknit"
-  },
-  {
-    id: 7,
-    name: "Adidas Casual Tshirt",
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-brand: "ADIDAS",
-gender: "MEN",
-category: "CASUAL", 
-size: [40, 42, 44, 46],
-color: ["white", "Red", "Black"],
-price: 1899,
-discountPrice : 1399,
-is_in_inventory: false,
-items_left: 0,
-imageURL: "https://soneesports.com/cdn/shop/products/IM4747_3_APPAREL_On_Model_Standard_View_white.jpg?v=1706465404", 
-slug: "nike-react-infinity-run-flyknit"
-  },
-  {
-    id: 8,
-    name: "Puma Sports Wear",
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-brand: "PUMA",
-gender: "MEN",
-category: "EXERCISES", 
-size: [6, 7, 8, 9, 10],
-color: ["white", "Blue", "Red"],
-price: 1199,
-discountPrice : 899,
-is_in_inventory: true,
-items_left: 8,
-imageURL: "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_300,h_300/global/108127/02/sv01/fnd/IND/fmt/png/Badminton-Smash-Sprint-Indoor-Sports-Shoes", 
-slug: "nike-react-infinity-run-flyknit"
-  },
-  {
-    id: 9,
-    name: "Nike Party Wear",
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-brand: "NIKE",
-gender: "MEN",
-category: "PARTY", 
-size: [6, 7, 8, 9, 10,11],
-color: ["Orange", "Green", "Black"],
-price: 1499,
-discountPrice : 1259,
-is_in_inventory: true,
-items_left: 6,
-imageURL: "https://extrabutterny.in/cdn/shop/files/AURORA_HQ4988-030_PHSLH000-2000.jpg?v=1731659652", 
-slug: "nike-react-infinity-run-flyknit"
-  },
-  {
-    id: 10,
-    name: "Puma Girls Stylish Bag",
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-brand: "PUMA",
-gender: "GIRLS",
-category: "COLLEGE", 
-size: [20, 25, 30, 40],
-color: ["white", "Pink", "Black"],
-price: 859,
-discountPrice : 629,
-is_in_inventory: false,
-items_left: 0,
-imageURL: "https://pumageorgia.ge/uploads/md/jpg/110/07994333.jpg?v=1744359097", 
-slug: "nike-react-infinity-run-flyknit"
-  },
-  {
-    id: 11,
-    name: "Adidas React Party Wear",
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-brand: "ADIDAS",
-gender: "MEN",
-category: "PARTY", 
-size: [6, 7, 8, 9, 10],
-color: ["Red", "Olive", "Black"],
-price: 1029,
-discountPrice : 759,
-is_in_inventory: true,
-items_left: 3,
-imageURL: "https://cdn-images.farfetch-contents.com/20/33/17/17/20331717_50365594_1000.jpg", 
-slug: "nike-react-infinity-run-flyknit"
-  },
-  {
-    id: 12,
-    name: "Puma Air Max",
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-brand: "PUMA",
-gender: "MEN",
-category: "RUNNING", 
-size: [6, 7, 8, 9, 10],
-color: ["Green", "Blue", "Black"],
-price: 1039,
-discountPrice : 869,
-is_in_inventory: false,
-items_left: 3,
-imageURL: "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_2000,h_2000/global/396463/22/sv01/fnd/IND/fmt/png/Palermo-Sneakers", 
-slug: "nike-react-infinity-run-flyknit"
-  },
-  {
-    id: 13,
-    name: "Wrogn Girls Slippers ",
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-brand: "WROGN",
-gender: "WOMEN",
-category: "CASUAL", 
-size: [40, 42, 44, 46],
-color: ["white", "Gray", "Random"],
-price: 1949,
-discountPrice : 1299,
-is_in_inventory: true,
-items_left: 3,
-imageURL: "https://m.media-amazon.com/images/I/71RoZBlx7vL._UY1000_.jpg", 
-slug: "nike-react-infinity-run-flyknit"
-  },
-  {
-    id: 14,
-    name: "Men's Adidas Precision",
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-brand: "ADIDAS",
-gender: "MEN",
-category: "CASUAL", 
-size: [6, 7, 8, 9, 10],
-color: ["white", "Blue", "Black"],
-price: 1499,
-discountPrice : 959,
-is_in_inventory: false,
-items_left: 0,
-imageURL: "https://img.tatacliq.com/images/i22//437Wx649H/MP000000025623006_437Wx649H_202503090456561.jpeg", 
-slug: "nike-react-infinity-run-flyknit"
-  },
-  {
-    id: 15,
-    name: "Bata Womens Slides",
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-brand: "BATA",
-gender: "WOMEN",
-category: "SLIDES", 
-size: [6, 7, 8, 9, 10],
-color: ["Orange", "Green", "Black"],
-price: 769,
-discountPrice : 599,
-is_in_inventory: true,
-items_left: 3,
-imageURL: "https://m.media-amazon.com/images/I/61VnGU4rkBL.jpg", 
-slug: "nike-react-infinity-run-flyknit"
-  },
-  {
-    id: 16,
-    name: "Womens Hand Bag",
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-brand: "FREEPIK",
-gender: "WOMEN",
-category: "CASUAL", 
-size: [10, 15, 20],
-color: ["white", "Blue", "Black"],
-price: 1299,
-discountPrice : 899,
-is_in_inventory: true,
-items_left: 6,
-imageURL: "https://img.freepik.com/free-photo/beautiful-elegance-luxury-fashion-green-handbag_1203-7655.jpg?semt=ais_hybrid&w=740", 
-slug: "nike-react-infinity-run-flyknit"
-  },
-  {
-    id: 17,
-    name: "Wenger Trolly Bag",
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-brand: "WENGER",
-gender: "MEN",
-category: "CASUAL", 
-size: [40, 50, 60, 70],
-color: ["Pink", "White", "Black"],
-discountPrice : 1099,
-price: 1499,
-is_in_inventory: false,
-items_left: 0,
-imageURL: "https://gutereise.in/cdn/shop/files/612763_1.jpg?v=1684304589", 
-slug: "nike-react-infinity-run-flyknit"
-  },
-  {
-    id: 18,
-    name: "Men's Fastrack Watches",
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-brand: "FASTRACK",
-gender: "MEN",
-category: "CASUAL", 
-size: [6, 7, 8, 9],
-color: ["Gray", "White", "Black"],
-price: 999,
-discountPrice : 769,
-is_in_inventory: true,
-items_left: 4,
-imageURL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_JN3-LrhPxO4XTDzScDyOoMKRvgyGrGSiWA&s", 
-slug: "nike-react-infinity-run-flyknit"
-  },
-  {
-    id: 19,
-    name: "Puma Stylish Sneaker",
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-brand: "PUMA",
-gender: "MEN",
-category: "RUNNING", 
-size: [6, 7, 8, 9, 10,11],
-color: ["Yellow", "Olive", "Black"],
-price: 1699,
-discountPrice : 1299,
-is_in_inventory: true,
-items_left: 8,
-imageURL: "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_300,h_300/global/395111/04/sv01/fnd/IND/fmt/png/Smashic-Women's-Comfort-Casual-Sneakers", 
-slug: "nike-react-infinity-run-flyknit"
-  },
-  {
-    id: 20,
-    name: "Amalfi Silver Watch",
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-brand: "AMALFI",
-gender: "WOMEN",
-category: "CASUAL", 
-size: [40, 42, 44, 46, 48],
-color: ["white", "Gray", "Black"],
-price: 1249,
-discountPrice : 899,
-is_in_inventory: true,
-items_left: 6,
-imageURL: "https://justcavalliwatches.com/wp-content/uploads/2023/10/JC1L270M0015-3.webp", 
-slug: "nike-react-infinity-run-flyknit"
-  },
-  {
-    id: 21,
-    name: "Puma Travel Bag",
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-brand: "PUMA",
-gender: "MEN",
-category: "TRAVEL", 
-size: [20, 25, 30, 40],
-color: ["white", "Olive", "Black"],
-price: 899,
-discountPrice : 659,
-is_in_inventory: false,
-items_left: 0,
-imageURL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNSvEj5fXXKE5iNIlpjdK7DbQ4oyxkcE4PzQ&s", 
-slug: "nike-react-infinity-run-flyknit"
-  },
-  {
-    id: 22,
-    name: "Mens Fashon Jeans",
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-brand: "LEVIS",
-gender: "MEN",
-category: "CASUAL", 
-size: [30, 32, 34, 36],
-color: ["white", "Red", "Black"],
-price: 899,
-discountPrice : 1099,
-is_in_inventory: false,
-items_left: 0,
-imageURL: "https://levis.co.nz/cdn/shop/files/levis-mens-555-relaxed-straight-jeans-000LO0004_7_LD_FV_fbc43cf1-7445-46b6-a087-022e4b20b381_3558X2000.progressive.jpg?v=1750403974", 
-slug: "nike-react-infinity-run-flyknit"
-  },
-  {
-    id: 23,
-    name: "Puma Womens Tshirt",
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-brand: "PUMA",
-gender: "WOMEN",
-category: "CASUAL", 
-size: [38, 40, 42, 44],
-color: ["white", "Blue", "Red"],
-price: 1199,
-discountPrice : 899,
-is_in_inventory: true,
-items_left: 8,
-imageURL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHpZIPJ8VEUhptxgD-A9LSviPlWhiMskLDWA&s", 
-slug: "nike-react-infinity-run-flyknit"
-  },
-  {
-    id: 24,
-    name: "Park Avenue Signature Collection",
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-brand: "PARK AVENUE",
-gender: "MEN",
-category: "PARTY", 
-size: [100, 150, 200],
-color: ["Discover", "Voyage", "Neo"],
-price: 499,
-discountPrice : 359,
-is_in_inventory: true,
-items_left: 6,
-imageURL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6yLMOiRCIcvFb6jFUdrMA5L9blvcaxQCQ9g&s", 
-slug: "nike-react-infinity-run-flyknit"
-  },
-  {
-    id: 25,
-    name: "Santoor Soap",
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-brand: "SANTOOR",
-gender: "MEN",
-category: "SOAP", 
-size: [30, 50, 100, 125],
-color: ["white", "Pink", "Orange"],
-price: 159,
-discountPrice : 129,
-is_in_inventory: false,
-items_left: 0,
-imageURL: "https://tiimg.tistatic.com/fp/1/007/805/soft-smooth-skin-friendly-long-lasting-nourishment-santoor-white-soap--291.jpg", 
-slug: "nike-react-infinity-run-flyknit"
-  },
-  {
-    id: 26,
-    name: "Water Bottle Milton",
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-brand: "MILTON",
-gender: "MEN",
-category: "CASUAL", 
-size: [500, 600, 750, 1000],
-color: ["Red", "Olive", "Black"],
-price: 1029,
-discountPrice : 759,
-is_in_inventory: true,
-items_left: 3,
-imageURL: "https://media.istockphoto.com/id/1423379549/vector/blank-metal-insulated-water-bottle-vector-mockup-reusable-stainless-steel-travel-sport-flask.jpg?s=612x612&w=0&k=20&c=mXeJNB9xF7jh2Q8mGxkuenoyhEcgxdaBx9BaffVDb6k=", 
-slug: "nike-react-infinity-run-flyknit"
-  },
-  {
-    id: 27,
-    name: " Lunch Box On White",
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-brand: "ISTOCK",
-gender: "MEN",
-category: "CASUAL", 
-size: [500, 750],
-color: ["Green", "Blue", "Black"],
-price: 1039,
-discountPrice : 869,
-is_in_inventory: false,
-items_left: 3,
-imageURL: "https://media.istockphoto.com/id/1275872927/photo/healthy-school-lunch-lunch-time.jpg?s=612x612&w=0&k=20&c=iaX8fqe0HsX8G18-hstwGgBlFDkZvEIOzkNg-xs0MD4=", 
-slug: "nike-react-infinity-run-flyknit"
-  },
-  {
-    id: 28,
-    name: "Girls Dress Kids",
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-brand: "ITAMY",
-gender: "KIDS",
-category: "CASUAL", 
-size: [40, 42, 44, 46],
-color: ["white", "Gray", "Pink"],
-price: 1949,
-discountPrice : 1299,
-is_in_inventory: true,
-items_left: 3,
-imageURL: "https://itsmycostume.com/wp-content/uploads/4-28.jpg", 
-slug: "nike-react-infinity-run-flyknit"
-  },
-  {
-    id: 29,
-    name: "Men's Adidas Precision",
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-brand: "ADIDAS",
-gender: "MEN",
-category: "CASUAL", 
-size: [6, 7, 8, 9, 10],
-color: ["white", "Blue", "Black"],
-price: 1499,
-discountPrice : 959,
-is_in_inventory: false,
-items_left: 0,
-imageURL: "https://img.tatacliq.com/images/i22//437Wx649H/MP000000025623006_437Wx649H_202503090456561.jpeg", 
-slug: "nike-react-infinity-run-flyknit"
-  },
-  {
-    id: 30,
-    name: "Puma Vapor Pro 3",
-    description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-brand: "PUMA",
-gender: "MEN",
-category: "SNEAKER", 
-size: [6, 7, 8, 9, 10],
-color: ["Orange", "Green", "Black"],
-price: 1699,
-discountPrice : 1239,
-is_in_inventory: true,
-items_left: 3,
-imageURL: "https://images-cdn.ubuy.co.in/634d06b811e5df5c442cfe99-192799-01-mens-puma-hybrid-astro.jpg", 
-slug: "nike-react-infinity-run-flyknit"
-  },
-];
- 
-  totalProductsCount = this.products.length;
-  productInStock = this.products.filter(p => p.is_in_inventory).length;
-  productOutOfStock = this.products.filter(p => !p.is_in_inventory).length;
+  products: Product[] = [];
+  loading: boolean = true;
+
+  constructor(private productService: ProductService) {}
+
+  ngOnInit(): void {
+    this.productService.getProducts().subscribe({
+      next: (data) => {
+        if (data && data.length > 0) {
+          this.products = data;
+        } else {
+          this.products = this.getDefaultProducts();
+        }
+        this.loading = false;
+      },
+      error: () => {
+        this.products = this.getDefaultProducts();
+        this.loading = false;
+      }
+    });
+  }
+
+  get totalProductsCount(): number {
+    return this.products.length;
+  }
+
+  get productInStock(): number {
+    return this.products.filter(p => p.is_in_inventory || p.isInInventory).length;
+  }
+
+  get productOutOfStock(): number {
+    return this.products.filter(p => !(p.is_in_inventory || p.isInInventory)).length;
+  }
 
   onFilterChanged(value: string) {
     this.selectedFilterRadioButton = value;
@@ -510,12 +58,322 @@ slug: "nike-react-infinity-run-flyknit"
     return this.products.filter(prod => {
       const matchSearch =
         this.searchText === '' || prod.name.toLowerCase().includes(this.searchText.toLowerCase());
+      
+      const inInventory = prod.is_in_inventory || prod.isInInventory;
+
       const matchFilter =
         this.selectedFilterRadioButton === 'all' ||
-        (this.selectedFilterRadioButton === 'inStock' && prod.is_in_inventory) ||
-        (this.selectedFilterRadioButton === 'outOfStock' && !prod.is_in_inventory);
+        (this.selectedFilterRadioButton === 'inStock' && inInventory) ||
+        (this.selectedFilterRadioButton === 'outOfStock' && !inInventory);
 
       return matchSearch && matchFilter;
     });
+  }
+
+  private getDefaultProducts(): Product[] {
+    const rawList = [
+      {
+        id: 1,
+        name: "Nike React Infinity Run Flyknit",
+        description: "High-performance cushioned running shoes designed for ultimate comfort and durability.",
+        brand: "NIKE", gender: "MEN", category: "RUNNING", 
+        size: [6, 7, 8, 9, 10], color: ["white", "Blue", "Black"],
+        price: 1299, discountPrice: 899, is_in_inventory: true, items_left: 6,
+        imageURL: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop&q=80", 
+        slug: "nike-react-infinity-run-flyknit"
+      },
+      {
+        id: 2,
+        name: "Adidas Stylish Shoes",
+        description: "Sleek and versatile casual sneakers for everyday comfort and urban lifestyle.",
+        brand: "ADIDAS", gender: "MEN", category: "CASUAL", 
+        size: [7, 8, 9, 10], color: ["Pink", "White", "Black"],
+        discountPrice: 1099, price: 1499, is_in_inventory: false, items_left: 0,
+        imageURL: "https://images.unsplash.com/photo-1584735935682-2f2b69dff9d2?w=600&auto=format&fit=crop&q=80", 
+        slug: "adidas-stylish-shoes"
+      },
+      {
+        id: 3,
+        name: "Puma Mens Sneakers",
+        description: "Classic streetwear sneakers built with premium materials and comfortable cushioning.",
+        brand: "PUMA", gender: "MEN", category: "CASUAL", 
+        size: [6, 7, 8, 9], color: ["Gray", "White", "Black"],
+        price: 999, discountPrice: 769, is_in_inventory: true, items_left: 4,
+        imageURL: "https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=600&auto=format&fit=crop&q=80", 
+        slug: "puma-mens-sneakers"
+      },
+      {
+        id: 4,
+        name: "Puma Stylish Sneaker",
+        description: "Trendy running sneakers offering soft comfort and responsive stride.",
+        brand: "PUMA", gender: "MEN", category: "RUNNING", 
+        size: [6, 7, 8, 9, 10, 11], color: ["Yellow", "Olive", "Black"],
+        price: 1699, discountPrice: 1299, is_in_inventory: true, items_left: 8,
+        imageURL: "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=600&auto=format&fit=crop&q=80", 
+        slug: "puma-stylish-sneaker"
+      },
+      {
+        id: 5,
+        name: "Adidas Gym Wear",
+        description: "Breathable athletic training apparel engineered for intensive workouts.",
+        brand: "ADIDAS", gender: "MEN", category: "GYM", 
+        size: [40, 42, 44, 46, 48], color: ["white", "Gray", "Black"],
+        price: 1249, discountPrice: 899, is_in_inventory: true, items_left: 6,
+        imageURL: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&auto=format&fit=crop&q=80", 
+        slug: "adidas-gym-wear"
+      },
+      {
+        id: 6,
+        name: "Puma College Bag",
+        description: "Durable multi-compartment backpack perfect for school, college, and daily travel.",
+        brand: "PUMA", gender: "MEN", category: "COLLEGE", 
+        size: [20, 25, 30, 40], color: ["white", "Olive", "Black"],
+        price: 899, discountPrice: 659, is_in_inventory: false, items_left: 0,
+        imageURL: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&auto=format&fit=crop&q=80", 
+        slug: "puma-college-bag"
+      },
+      {
+        id: 7,
+        name: "Adidas Casual Tshirt",
+        description: "Premium cotton crewneck t-shirt with classic triple stripe styling.",
+        brand: "ADIDAS", gender: "MEN", category: "CASUAL", 
+        size: [40, 42, 44, 46], color: ["white", "Red", "Black"],
+        price: 1899, discountPrice: 1399, is_in_inventory: false, items_left: 0,
+        imageURL: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop&q=80", 
+        slug: "adidas-casual-tshirt"
+      },
+      {
+        id: 8,
+        name: "Puma Sports Wear",
+        description: "Indoor sports non-marking grip shoes crafted for court agility and speed.",
+        brand: "PUMA", gender: "MEN", category: "EXERCISES", 
+        size: [6, 7, 8, 9, 10], color: ["white", "Blue", "Red"],
+        price: 1199, discountPrice: 899, is_in_inventory: true, items_left: 8,
+        imageURL: "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?w=600&auto=format&fit=crop&q=80", 
+        slug: "puma-sports-wear"
+      },
+      {
+        id: 9,
+        name: "Nike Party Wear",
+        description: "Vibrant designer sneakers featuring bold aesthetics and maximum impact protection.",
+        brand: "NIKE", gender: "MEN", category: "PARTY", 
+        size: [6, 7, 8, 9, 10, 11], color: ["Orange", "Green", "Black"],
+        price: 1499, discountPrice: 1259, is_in_inventory: true, items_left: 6,
+        imageURL: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=600&auto=format&fit=crop&q=80", 
+        slug: "nike-party-wear"
+      },
+      {
+        id: 10,
+        name: "Puma Girls Stylish Bag",
+        description: "Cute compact backpack designed for young women and college essentials.",
+        brand: "PUMA", gender: "GIRLS", category: "COLLEGE", 
+        size: [20, 25, 30, 40], color: ["white", "Pink", "Black"],
+        price: 859, discountPrice: 629, is_in_inventory: false, items_left: 0,
+        imageURL: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600&auto=format&fit=crop&q=80", 
+        slug: "puma-girls-stylish-bag"
+      },
+      {
+        id: 11,
+        name: "Adidas React Party Wear",
+        description: "High-top party sneakers with reactive sole cushioning.",
+        brand: "ADIDAS", gender: "MEN", category: "PARTY", 
+        size: [6, 7, 8, 9, 10], color: ["Red", "Olive", "Black"],
+        price: 1029, discountPrice: 759, is_in_inventory: true, items_left: 3,
+        imageURL: "https://images.unsplash.com/photo-1512374382149-233c42b6a83b?w=600&auto=format&fit=crop&q=80", 
+        slug: "adidas-react-party-wear"
+      },
+      {
+        id: 12,
+        name: "Puma Air Max",
+        description: "Lightweight cushion sole running shoes engineered for speed.",
+        brand: "PUMA", gender: "MEN", category: "RUNNING", 
+        size: [6, 7, 8, 9, 10], color: ["Green", "Blue", "Black"],
+        price: 1039, discountPrice: 869, is_in_inventory: false, items_left: 3,
+        imageURL: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=600&auto=format&fit=crop&q=80", 
+        slug: "puma-air-max"
+      },
+      {
+        id: 13,
+        name: "Wrogn Girls Slippers",
+        description: "Comfortable lightweight slides with ergonomic footbed.",
+        brand: "WROGN", gender: "WOMEN", category: "CASUAL", 
+        size: [40, 42, 44, 46], color: ["white", "Gray", "Random"],
+        price: 1949, discountPrice: 1299, is_in_inventory: true, items_left: 3,
+        imageURL: "https://images.unsplash.com/photo-1603808033192-082d6919d3e1?w=600&auto=format&fit=crop&q=80", 
+        slug: "wrogn-girls-slippers"
+      },
+      {
+        id: 14,
+        name: "Men's Adidas Precision",
+        description: "Precision fit performance shoes for active lifestyle.",
+        brand: "ADIDAS", gender: "MEN", category: "CASUAL", 
+        size: [6, 7, 8, 9, 10], color: ["white", "Blue", "Black"],
+        price: 1499, discountPrice: 959, is_in_inventory: false, items_left: 0,
+        imageURL: "https://images.unsplash.com/photo-1539185441755-769473a23570?w=600&auto=format&fit=crop&q=80", 
+        slug: "mens-adidas-precision"
+      },
+      {
+        id: 15,
+        name: "Bata Womens Slides",
+        description: "Slip-on comfort slides with non-slip sole for daily wear.",
+        brand: "BATA", gender: "WOMEN", category: "SLIDES", 
+        size: [6, 7, 8, 9, 10], color: ["Orange", "Green", "Black"],
+        price: 769, discountPrice: 599, is_in_inventory: true, items_left: 3,
+        imageURL: "https://images.unsplash.com/photo-1562273138-f46be4ebdf33?w=600&auto=format&fit=crop&q=80", 
+        slug: "bata-womens-slides"
+      },
+      {
+        id: 16,
+        name: "Womens Hand Bag",
+        description: "Elegant luxury vegan leather handbag with golden hardware.",
+        brand: "FREEPIK", gender: "WOMEN", category: "CASUAL", 
+        size: [10, 15, 20], color: ["white", "Blue", "Black"],
+        price: 1299, discountPrice: 899, is_in_inventory: true, items_left: 6,
+        imageURL: "https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=600&auto=format&fit=crop&q=80", 
+        slug: "womens-hand-bag"
+      },
+      {
+        id: 17,
+        name: "Wenger Trolly Bag",
+        description: "Hard-shell expandable spinner luggage bag for international travel.",
+        brand: "WENGER", gender: "MEN", category: "CASUAL", 
+        size: [40, 50, 60, 70], color: ["Pink", "White", "Black"],
+        discountPrice: 1099, price: 1499, is_in_inventory: false, items_left: 0,
+        imageURL: "https://images.unsplash.com/photo-1565026057447-b88e40bc2b2a?w=600&auto=format&fit=crop&q=80", 
+        slug: "wenger-trolly-bag"
+      },
+      {
+        id: 18,
+        name: "Men's Fastrack Watches",
+        description: "Analog sports watch with stainless steel casing and water resistance.",
+        brand: "FASTRACK", gender: "MEN", category: "CASUAL", 
+        size: [6, 7, 8, 9], color: ["Gray", "White", "Black"],
+        price: 999, discountPrice: 769, is_in_inventory: true, items_left: 4,
+        imageURL: "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=600&auto=format&fit=crop&q=80", 
+        slug: "mens-fastrack-watches"
+      },
+      {
+        id: 19,
+        name: "Puma Outdoor Sneaker",
+        description: "Rugged trail sneakers with deep traction rubber outsoles.",
+        brand: "PUMA", gender: "MEN", category: "RUNNING", 
+        size: [6, 7, 8, 9, 10, 11], color: ["Yellow", "Olive", "Black"],
+        price: 1699, discountPrice: 1299, is_in_inventory: true, items_left: 8,
+        imageURL: "https://images.unsplash.com/photo-1579338559194-a162d19bf842?w=600&auto=format&fit=crop&q=80", 
+        slug: "puma-outdoor-sneaker"
+      },
+      {
+        id: 20,
+        name: "Amalfi Silver Watch",
+        description: "Luxury women's silver dial timepiece with mesh strap.",
+        brand: "AMALFI", gender: "WOMEN", category: "CASUAL", 
+        size: [40, 42, 44, 46, 48], color: ["white", "Gray", "Black"],
+        price: 1249, discountPrice: 899, is_in_inventory: true, items_left: 6,
+        imageURL: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=600&auto=format&fit=crop&q=80", 
+        slug: "amalfi-silver-watch"
+      },
+      {
+        id: 21,
+        name: "Puma Travel Bag",
+        description: "Duffle bag with dedicated shoe compartment.",
+        brand: "PUMA", gender: "MEN", category: "TRAVEL", 
+        size: [20, 25, 30, 40], color: ["white", "Olive", "Black"],
+        price: 899, discountPrice: 659, is_in_inventory: false, items_left: 0,
+        imageURL: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&auto=format&fit=crop&q=80", 
+        slug: "puma-travel-bag"
+      },
+      {
+        id: 22,
+        name: "Mens Fashion Jeans",
+        description: "Slim fit stretch denim jeans with classic 5-pocket styling.",
+        brand: "LEVIS", gender: "MEN", category: "CASUAL", 
+        size: [30, 32, 34, 36], color: ["white", "Red", "Black"],
+        price: 899, discountPrice: 1099, is_in_inventory: false, items_left: 0,
+        imageURL: "https://images.unsplash.com/photo-1542272604-780c36856d67?w=600&auto=format&fit=crop&q=80", 
+        slug: "mens-fashion-jeans"
+      },
+      {
+        id: 23,
+        name: "Puma Womens Tshirt",
+        description: "Soft organic cotton relaxed fit graphic top.",
+        brand: "PUMA", gender: "WOMEN", category: "CASUAL", 
+        size: [38, 40, 42, 44], color: ["white", "Blue", "Red"],
+        price: 1199, discountPrice: 899, is_in_inventory: true, items_left: 8,
+        imageURL: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=600&auto=format&fit=crop&q=80", 
+        slug: "puma-womens-tshirt"
+      },
+      {
+        id: 24,
+        name: "Park Avenue Signature Collection",
+        description: "Premium long-lasting body spray perfume for men.",
+        brand: "PARK AVENUE", gender: "MEN", category: "PARTY", 
+        size: [100, 150, 200], color: ["Discover", "Voyage", "Neo"],
+        price: 499, discountPrice: 359, is_in_inventory: true, items_left: 6,
+        imageURL: "https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=600&auto=format&fit=crop&q=80", 
+        slug: "park-avenue-signature"
+      },
+      {
+        id: 25,
+        name: "Santoor Soap",
+        description: "Sandalwood and turmeric skin care bath soap pack.",
+        brand: "SANTOOR", gender: "MEN", category: "SOAP", 
+        size: [30, 50, 100, 125], color: ["white", "Pink", "Orange"],
+        price: 159, discountPrice: 129, is_in_inventory: false, items_left: 0,
+        imageURL: "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?w=600&auto=format&fit=crop&q=80", 
+        slug: "santoor-soap"
+      },
+      {
+        id: 26,
+        name: "Water Bottle Milton",
+        description: "Insulated stainless steel thermal flask keeps drinks hot/cold 24 hours.",
+        brand: "MILTON", gender: "MEN", category: "CASUAL", 
+        size: [500, 600, 750, 1000], color: ["Red", "Olive", "Black"],
+        price: 1029, discountPrice: 759, is_in_inventory: true, items_left: 3,
+        imageURL: "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=600&auto=format&fit=crop&q=80", 
+        slug: "water-bottle-milton"
+      },
+      {
+        id: 27,
+        name: "Lunch Box On White",
+        description: "BPA-free leakproof insulated lunch box container with cutlery.",
+        brand: "ISTOCK", gender: "MEN", category: "CASUAL", 
+        size: [500, 750], color: ["Green", "Blue", "Black"],
+        price: 1039, discountPrice: 869, is_in_inventory: false, items_left: 3,
+        imageURL: "https://images.unsplash.com/photo-1584269600464-37b1b58a9fe7?w=600&auto=format&fit=crop&q=80", 
+        slug: "lunch-box-on-white"
+      },
+      {
+        id: 28,
+        name: "Girls Dress Kids",
+        description: "Festive floral embroidered cotton dress for young girls.",
+        brand: "ITAMY", gender: "KIDS", category: "CASUAL", 
+        size: [40, 42, 44, 46], color: ["white", "Gray", "Pink"],
+        price: 1949, discountPrice: 1299, is_in_inventory: true, items_left: 3,
+        imageURL: "https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?w=600&auto=format&fit=crop&q=80", 
+        slug: "girls-dress-kids"
+      },
+      {
+        id: 29,
+        name: "Men's Adidas Precision Pro",
+        description: "Lightweight cushion sole running shoes engineered for speed.",
+        brand: "ADIDAS", gender: "MEN", category: "CASUAL", 
+        size: [6, 7, 8, 9, 10], color: ["white", "Blue", "Black"],
+        price: 1499, discountPrice: 959, is_in_inventory: false, items_left: 0,
+        imageURL: "https://images.unsplash.com/photo-1582588678413-dbf45f4823e9?w=600&auto=format&fit=crop&q=80", 
+        slug: "mens-adidas-precision-pro"
+      },
+      {
+        id: 30,
+        name: "Puma Vapor Pro 3",
+        description: "Professional court tennis shoes with reinforced toe cap and lateral stability.",
+        brand: "PUMA", gender: "MEN", category: "SNEAKER", 
+        size: [6, 7, 8, 9, 10], color: ["Orange", "Green", "Black"],
+        price: 1699, discountPrice: 1239, is_in_inventory: true, items_left: 3,
+        imageURL: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=600&auto=format&fit=crop&q=80", 
+        slug: "puma-vapor-pro-3"
+      }
+    ];
+
+    return rawList.map(p => this.productService.normalizeProduct(p));
   }
 }

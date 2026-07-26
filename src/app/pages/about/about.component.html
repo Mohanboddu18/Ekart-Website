@@ -1,0 +1,48 @@
+<div class="about-page">
+  <div class="about-header">
+    <h1>About <span class="highlight">eKart</span></h1>
+    <p>Your premier destination for high-performance athletic footwear, apparel, and urban fashion.</p>
+  </div>
+
+  <div class="about-section story-section">
+    <div class="story-text">
+      <h2>Our Mission</h2>
+      <p>Founded with a passion for quality and authentic sportswear, eKart brings world-class brands including Nike, Adidas, Puma, Fastrack, and Levis directly to your doorstep. Powered by Spring Boot and Angular technology, we deliver lightning-fast browsing, robust security, and seamless shopping experiences.</p>
+      <p>Whether you're hitting the gym, training for a marathon, or looking for everyday streetwear, eKart is engineered to keep you performing at your best.</p>
+    </div>
+    <div class="story-card">
+      <div class="card-inner">
+        <h3>⚡ Powered by Spring Security & Angular</h3>
+        <p>Built with enterprise-grade JWT authentication, REST APIs, and H2 database persistence.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat-card" *ngFor="let stat of stats">
+      <div class="stat-number">{{ stat.number }}</div>
+      <div class="stat-label">{{ stat.label }}</div>
+    </div>
+  </div>
+
+  <div class="values-section">
+    <h2>Why Shop With Us?</h2>
+    <div class="values-grid">
+      <div class="value-box">
+        <span class="v-icon">💯</span>
+        <h4>100% Authentic Products</h4>
+        <p>Sourced directly from verified brand distributors with genuine quality guarantees.</p>
+      </div>
+      <div class="value-box">
+        <span class="v-icon">⚡</span>
+        <h4>Instant Order Tracking</h4>
+        <p>Real-time updates from dispatch to doorstep delivery via our tracking portal.</p>
+      </div>
+      <div class="value-box">
+        <span class="v-icon">🔄</span>
+        <h4>No-Questions Exchange</h4>
+        <p>Size doesn't fit? Exchange or return items smoothly within 30 days.</p>
+      </div>
+    </div>
+  </div>
+</div>

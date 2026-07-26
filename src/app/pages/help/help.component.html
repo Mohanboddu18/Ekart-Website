@@ -1,0 +1,80 @@
+<div class="help-page">
+  <div class="help-header">
+    <h1>Help Center & <span class="highlight">FAQs</span></h1>
+    <p>Find answers to common questions about orders, shipping, payments, and returns.</p>
+    
+    <div class="search-box">
+      <input type="text" [(ngModel)]="searchQuery" (ngModelChange)="filterFaqs()" placeholder="🔍 Search help articles or questions...">
+    </div>
+  </div>
+
+  <!-- FAQ CATEGORY FILTER -->
+  <div class="category-pills">
+    <button [class.active]="selectedCategory === 'all'" (click)="selectedCategory = 'all'; filterFaqs()">All Topics</button>
+    <button [class.active]="selectedCategory === 'Shipping'" (click)="selectedCategory = 'Shipping'; filterFaqs()">🚚 Shipping</button>
+    <button [class.active]="selectedCategory === 'Returns'" (click)="selectedCategory = 'Returns'; filterFaqs()">🔄 Returns & Exchange</button>
+    <button [class.active]="selectedCategory === 'Orders'" (click)="selectedCategory = 'Orders'; filterFaqs()">📦 Order Tracking</button>
+    <button [class.active]="selectedCategory === 'Payment'" (click)="selectedCategory = 'Payment'; filterFaqs()">💳 Payment & Refunds</button>
+  </div>
+
+  <!-- FAQ ACCORDION -->
+  <div class="faq-list">
+    <div class="faq-item" *ngFor="let faq of filteredFaqs; let i = index" [class.open]="activeIndex === i">
+      <div class="faq-question" (click)="toggleFaq(i)">
+        <h4>{{ faq.question }}</h4>
+        <span class="faq-toggle-icon">{{ activeIndex === i ? '−' : '+' }}</span>
+      </div>
+      <div class="faq-answer" *ngIf="activeIndex === i">
+        <p>{{ faq.answer }}</p>
+      </div>
+    </div>
+    <div class="no-faqs" *ngIf="filteredFaqs.length === 0">
+      <p>No help articles found matching your query. Please submit a support ticket below.</p>
+    </div>
+  </div>
+
+  <!-- SUBMIT TICKET SECTION -->
+  <div class="ticket-section">
+    <div class="ticket-header">
+      <h2>Still need assistance? Submit a Support Ticket</h2>
+      <p>Our dedicated customer happiness team responds within 24 business hours.</p>
+    </div>
+
+    <div class="alert alert-success" *ngIf="ticketSubmitted">
+      ✅ {{ ticketMessage }}
+    </div>
+
+    <form (ngSubmit)="onTicketSubmit()" class="ticket-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Your Name *</label>
+          <input type="text" [(ngModel)]="ticketData.name" name="name" required class="form-input">
+        </div>
+        <div class="form-group">
+          <label>Your Email *</label>
+          <input type="email" [(ngModel)]="ticketData.email" name="email" required class="form-input">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Category</label>
+          <select [(ngModel)]="ticketData.category" name="category" class="form-input">
+            <option value="General">General Inquiry</option>
+            <option value="Shipping">Shipping Delay</option>
+            <option value="Returns">Return / Exchange Request</option>
+            <option value="Payment">Payment Issue</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Subject</label>
+          <input type="text" [(ngModel)]="ticketData.subject" name="subject" class="form-input" placeholder="Short description of issue">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Detailed Message *</label>
+        <textarea [(ngModel)]="ticketData.message" name="message" rows="4" required class="form-input" placeholder="Provide order ID or details..."></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit Ticket</button>
+    </form>
+  </div>
+</div>

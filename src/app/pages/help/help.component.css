@@ -1,0 +1,178 @@
+.help-page {
+  font-family: 'Inter', -apple-system, sans-serif;
+  padding: 3rem 8%;
+}
+
+.help-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.help-header h1 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #0F172A;
+}
+
+.help-header .highlight {
+  color: #38BDF8;
+}
+
+.help-header p {
+  color: #64748B;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.search-box input {
+  width: 100%;
+  max-width: 550px;
+  padding: 14px 20px;
+  border-radius: 30px;
+  border: 2px solid #E2E8F0;
+  font-size: 1rem;
+  outline: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.search-box input:focus {
+  border-color: #38BDF8;
+}
+
+.category-pills {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+}
+
+.category-pills button {
+  background: #F1F5F9;
+  border: 1px solid #CBD5E1;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.category-pills button.active, .category-pills button:hover {
+  background: #0F172A;
+  color: #FFF;
+  border-color: #0F172A;
+}
+
+.faq-list {
+  max-width: 800px;
+  margin: 0 auto 4rem;
+}
+
+.faq-item {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+.faq-question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 1.5rem;
+  cursor: pointer;
+  background: #FFFFFF;
+}
+
+.faq-question h4 {
+  margin: 0;
+  font-size: 1.05rem;
+  color: #0F172A;
+}
+
+.faq-toggle-icon {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #0284C7;
+}
+
+.faq-answer {
+  padding: 0 1.5rem 1.2rem;
+  color: #475569;
+  line-height: 1.6;
+  font-size: 0.95rem;
+  border-top: 1px solid #F1F5F9;
+}
+
+.ticket-section {
+  max-width: 800px;
+  margin: 0 auto;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 20px;
+  padding: 2.5rem;
+}
+
+.ticket-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.ticket-header h2 {
+  font-size: 1.5rem;
+  color: #0F172A;
+}
+
+.ticket-header p {
+  color: #64748B;
+  font-size: 0.9rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.form-row .form-group {
+  flex: 1;
+}
+
+.form-group {
+  margin-bottom: 1.2rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #334155;
+  margin-bottom: 6px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #CBD5E1;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.btn-primary {
+  background: #0284C7;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.alert-success {
+  background: #DCFCE7;
+  color: #15803D;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}

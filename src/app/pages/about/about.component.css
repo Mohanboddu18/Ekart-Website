@@ -1,0 +1,141 @@
+.about-page {
+  font-family: 'Inter', -apple-system, sans-serif;
+  padding: 3rem 8%;
+}
+
+.about-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.about-header h1 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #0F172A;
+}
+
+.about-header .highlight {
+  color: #38BDF8;
+}
+
+.about-header p {
+  color: #64748B;
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0.5rem auto 0;
+}
+
+.story-section {
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+  margin-bottom: 4rem;
+}
+
+.story-text {
+  flex: 1.2;
+}
+
+.story-text h2 {
+  font-size: 1.8rem;
+  color: #0F172A;
+  margin-bottom: 1rem;
+}
+
+.story-text p {
+  color: #475569;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.story-card {
+  flex: 0.8;
+  background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+  border-radius: 20px;
+  padding: 2.5rem;
+  color: #FFF;
+  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.2);
+}
+
+.card-inner h3 {
+  color: #38BDF8;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.card-inner p {
+  color: #94A3B8;
+  line-height: 1.6;
+}
+
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+.stat-card {
+  background: #F8FAFC;
+  border-radius: 16px;
+  padding: 2rem 1rem;
+  text-align: center;
+  border: 1px solid #E2E8F0;
+}
+
+.stat-number {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #0284C7;
+  margin-bottom: 0.3rem;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #64748B;
+}
+
+.values-section h2 {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 2.5rem;
+  color: #0F172A;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.value-box {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 16px;
+  padding: 2rem;
+  transition: transform 0.2s;
+}
+
+.value-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.v-icon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.value-box h4 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: #0F172A;
+}
+
+.value-box p {
+  font-size: 0.88rem;
+  color: #64748B;
+  line-height: 1.6;
+}

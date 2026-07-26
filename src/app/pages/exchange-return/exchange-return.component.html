@@ -1,0 +1,91 @@
+<div class="return-page">
+  <div class="return-header">
+    <h1>Exchange & <span class="highlight">Return Center</span></h1>
+    <p>Not completely satisfied with your order? Exchange size or get a refund easily within 30 days.</p>
+  </div>
+
+  <div class="return-tabs-grid">
+    <!-- SUBMIT RETURN / EXCHANGE FORM -->
+    <div class="return-card">
+      <h3>Submit New Exchange / Return Request</h3>
+      
+      <div class="alert alert-success" *ngIf="successMessage">
+        ✅ {{ successMessage }}
+      </div>
+      <div class="alert alert-danger" *ngIf="errorMessage">
+        ⚠️ {{ errorMessage }}
+      </div>
+
+      <form (ngSubmit)="onSubmitRequest()" class="return-form">
+        <div class="form-group">
+          <label>Request Type *</label>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" [(ngModel)]="returnForm.requestType" name="requestType" value="EXCHANGE">
+              🔄 Size / Item Exchange
+            </label>
+            <label class="radio-label">
+              <input type="radio" [(ngModel)]="returnForm.requestType" name="requestType" value="RETURN">
+              💰 Full Refund Return
+            </label>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Order ID *</label>
+            <input type="text" [(ngModel)]="returnForm.orderId" name="orderId" required class="form-input" placeholder="e.g. EK1001">
+          </div>
+          <div class="form-group">
+            <label>Email Address *</label>
+            <input type="email" [(ngModel)]="returnForm.userEmail" name="userEmail" required class="form-input" placeholder="e.g. user@ekart.com">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Reason for Request *</label>
+          <select [(ngModel)]="returnForm.reason" name="reason" class="form-input">
+            <option *ngFor="let r of reasons" [value]="r">{{ r }}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Item Name / Preferred Replacement Size</label>
+          <textarea [(ngModel)]="returnForm.itemDetails" name="itemDetails" rows="3" class="form-input" placeholder="Specify which item in the order and preferred new size (e.g. Size 9 -> Size 10)..."></textarea>
+        </div>
+
+        <button type="submit" [disabled]="submitting" class="btn btn-primary submit-btn">
+          {{ submitting ? 'Submitting...' : 'Submit Request' }}
+        </button>
+      </form>
+    </div>
+
+    <!-- TRACK RETURN STATUS -->
+    <div class="return-card">
+      <h3>Track Existing Return Request</h3>
+      <p class="sub-text">Enter your Return Reference ID (e.g. RET-59281) to check doorstep pickup & refund progress.</p>
+      
+      <div class="track-input-group">
+        <input type="text" [(ngModel)]="lookupReturnId" placeholder="Return ID (e.g. RET-59281)" class="form-input">
+        <button (click)="onTrackReturn()" class="btn btn-dark">Track Status</button>
+      </div>
+
+      <div class="alert alert-danger" *ngIf="lookupError">
+        ⚠️ {{ lookupError }}
+      </div>
+
+      <div class="status-result-card" *ngIf="trackedReturn">
+        <div class="status-header">
+          <span class="status-badge" [class.badge-approved]="trackedReturn.status === 'APPROVED'">{{ trackedReturn.status }}</span>
+          <span class="ret-id">{{ trackedReturn.returnId }}</span>
+        </div>
+        <div class="status-detail">
+          <p><strong>Order ID:</strong> {{ trackedReturn.orderId }}</p>
+          <p><strong>Type:</strong> {{ trackedReturn.requestType }}</p>
+          <p><strong>Reason:</strong> {{ trackedReturn.reason }}</p>
+          <p *ngIf="trackedReturn.itemDetails"><strong>Details:</strong> {{ trackedReturn.itemDetails }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,76 +1,50 @@
-.app-header {
+:host {
+    display: block;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
     width: 100%;
+}
+
+.app-header-container {
+    width: 100%;
+    background-color: #ffffff;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    border-bottom: 1px solid #E2E8F0;
+}
+
+.top-header-bar {
+    width: 100%;
+    background-color: #0F172A;
+}
+
+.main-header-bar {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
     justify-content: space-between;
-    border-bottom: #E5E4E2 1.5px solid;
-    padding: 1vh 2vh;
-    gap: 10px;
-}
-
-.app-header-logo {
-    font-size: clamp(20px, 5vw, 40px); /* Scales with screen size */
-    font-weight: bold;
-    color: #36454F;
-    font-family: 'Concert One', cursive;
-    flex: 1 1 140px;
-    text-align: center;
-}
-
-.app-header-navbar {
-    flex: 2 1 300px;
-    display: flex;
-    flex-direction: column;
-    font-size: clamp(12px, 2vw, 16px);
+    align-items: center;
+    padding: 12px 6%;
     width: 100%;
-    gap: 10px;
-}
-
-.ekart-bottom-bar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    width: 100%;
-}
-
-.ekart-search-bar {
-    padding: 0px 1vh;
-    width: 100%;
-}
-
-.ekart-search-box {
-    width: 100%;
-    max-width: 300px;
-    height: 2.5em;
-    border: none;
-    background-color: #efefef;
-    padding: 0.4em 1em;
-    font-size: 1em;
+    max-width: 1440px;
+    margin: 0 auto;
     box-sizing: border-box;
 }
 
-a {
-    text-decoration: none;
-    padding: 0px 10px;
+.app-header-logo {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: #0F172A;
+    font-family: 'Concert One', 'Inter', sans-serif;
+    cursor: pointer;
+    letter-spacing: -0.5px;
+    transition: transform 0.2s;
 }
 
-.ekart-search-btn {
-    width: 2.5em;
-    height: 2.5em;
-    border: none;
-    background-color: #efefef;
-    margin-left: -5px;
+.app-header-logo:hover {
+    transform: scale(1.03);
+    color: #0284C7;
 }
 
-.btn {
-    padding: 1em 1.5em;
-    border: none;
-    margin: 0.5em 0;
-    font-size: 1em;
-}
-
-.btn-primary {
-    background-color: #282628;
-    color: white;
+.app-header-menu {
+    display: flex;
+    align-items: center;
 }

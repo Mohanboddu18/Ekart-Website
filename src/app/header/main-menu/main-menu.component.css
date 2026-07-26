@@ -1,26 +1,19 @@
 .ekart-menu {
-    padding: 1vh;
-    color: #36454F;
-    font-family: 'Montserrat', sans-serif;
-    font-size: clamp(12px, 2vw, 18px);
-    width: 100%;
-    white-space: nowrap;
-
-    display: flex;
-    flex-wrap: nowrap; /* 👈 Don't allow wrapping */
-    overflow-x: auto;   /* 👈 Allow horizontal scrolling */
-    gap: 0.5em;
-    box-sizing: border-box;
-    scrollbar-width: none; /* Firefox */
-}
-
-.ekart-menu::-webkit-scrollbar {
-    display: none; /* Chrome/Safari */
+  display: flex;
+  gap: 2rem;
 }
 
 .ekart-menu a {
-    text-decoration: none;
-    color: inherit;
-    padding: 0.4em 0.7em;
-    flex: 0 0 auto; /* 👈 Prevent shrinking */
+  text-decoration: none;
+  color: #1E293B;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 6px 0;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.ekart-menu a:hover, .ekart-menu a.active-menu {
+  color: #0284C7;
+  border-bottom-color: #0284C7;
 }

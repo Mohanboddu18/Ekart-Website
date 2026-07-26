@@ -5,7 +5,7 @@
   </div>
 
     <div class="ekart-product-detail-image">
-        <img [src]="product.imageURL" class="ekart-product-detail-image" alt="Product Image">
+        <img [src]="product.imageURL" (error)="onImgError($event)" class="ekart-product-detail-image" alt="Product Image">
     </div>
     <div class="ekart-product-detail">
     <div class="ekart-product-detail-name">
@@ -74,7 +74,10 @@
     </div>
 </div>
     <div class="ekart-product-detail-addtoCart">
-      <button class="btn-add-to-cart" *ngIf="product.is_in_inventory; else notifyMe">ADD TO CART</button>
+      <div *ngIf="addedToCart" style="background:#DCFCE7; color:#15803D; padding:8px 14px; border-radius:6px; margin-bottom:8px; font-weight:bold; font-size:0.9rem; text-align:center;">
+        ✓ Added to Shopping Cart!
+      </div>
+      <button class="btn-add-to-cart" (click)="addToCart()" *ngIf="product.is_in_inventory; else notifyMe">ADD TO CART</button>
       <ng-template #notifyMe>
         <button class="btn-add-to-cart">NOTIFY ME</button>
       </ng-template>

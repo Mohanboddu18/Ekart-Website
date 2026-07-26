@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { AppRoutingModule } from './app-routing.module';
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { TopHeaderComponent } from './header/top-header/top-header.component';
@@ -11,7 +14,16 @@ import { ProductItemsComponent } from './product-list/product-items/product-item
 import { ProductComponent } from './product-list/product-items/product/product.component';
 import { FilterComponent } from './product-list/product-items/filter/filter.component';
 import { ProductDetailComponent } from './product-list/product-detail/product-detail.component';
-import { FeaturedBrandsComponent } from './product-list/featured-brands/featured-brands.component'; 
+import { FeaturedBrandsComponent } from './product-list/featured-brands/featured-brands.component';
+
+import { HomeComponent } from './pages/home/home.component';
+import { AboutComponent } from './pages/about/about.component';
+import { ContactComponent } from './pages/contact/contact.component';
+import { HelpComponent } from './pages/help/help.component';
+import { ExchangeReturnComponent } from './pages/exchange-return/exchange-return.component';
+import { OrderTrackerComponent } from './pages/order-tracker/order-tracker.component';
+import { AuthComponent } from './pages/auth/auth.component';
+import { CartComponent } from './pages/cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -25,11 +37,21 @@ import { FeaturedBrandsComponent } from './product-list/featured-brands/featured
     ProductComponent,
     FilterComponent,
     ProductDetailComponent,
-    FeaturedBrandsComponent
+    FeaturedBrandsComponent,
+    HomeComponent,
+    AboutComponent,
+    ContactComponent,
+    HelpComponent,
+    ExchangeReturnComponent,
+    OrderTrackerComponent,
+    AuthComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule 
+    FormsModule,
+    HttpClientModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

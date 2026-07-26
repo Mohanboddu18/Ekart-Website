@@ -1,13 +1,18 @@
 .ekart--products--container {
-  margin: 20px auto;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center; /* Centers children */
-  gap: 1.5rem; /* Add spacing between products */
+  margin: 24px auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.8rem;
+  align-items: stretch;
 
-  padding-left: clamp(1rem, 5vw, 10%);
-  padding-right: clamp(1rem, 5vw, 10%);
+  padding-left: clamp(1rem, 5vw, 8%);
+  padding-right: clamp(1rem, 5vw, 8%);
   box-sizing: border-box;
   width: 100%;
-  max-width: 1440px; /* Optional max limit for large screens */
+  max-width: 1440px;
+}
+
+app-product.ekart--product--card {
+  display: block;
+  height: 100%;
 }

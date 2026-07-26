@@ -1,0 +1,111 @@
+<div class="cart-page">
+  <div class="cart-header">
+    <h1>Shopping <span class="highlight">Cart</span></h1>
+    <p>Review items in your cart and proceed to checkout.</p>
+  </div>
+
+  <!-- ORDER SUCCESS SCREEN -->
+  <div class="order-success-card" *ngIf="orderPlaced">
+    <div class="success-icon">🎉</div>
+    <h2>Order Placed Successfully!</h2>
+    <p class="order-id-text">Your Order ID is: <strong>{{ placedOrderId }}</strong></p>
+    <p class="sub-text">Thank you for shopping with eKart! You can track your real-time shipment status anytime using your Order ID.</p>
+    <div class="success-actions">
+      <button (click)="goToOrderTracker()" class="btn btn-primary">Track Order Now</button>
+      <a routerLink="/products" class="btn btn-outline">Continue Shopping</a>
+    </div>
+  </div>
+
+  <!-- EMPTY CART SCREEN -->
+  <div class="empty-cart-card" *ngIf="!orderPlaced && cartItems.length === 0">
+    <div class="empty-icon">🛒</div>
+    <h2>Your Cart is Empty</h2>
+    <p>Explore our catalog to add high performance shoes, bags, and apparel to your bag.</p>
+    <a routerLink="/products" class="btn btn-primary">Explore Products</a>
+  </div>
+
+  <!-- CART & CHECKOUT GRID -->
+  <div class="cart-grid" *ngIf="!orderPlaced && cartItems.length > 0">
+    <!-- ITEMS LIST -->
+    <div class="cart-items-section">
+      <h3>Cart Items ({{ totalCount }})</h3>
+      
+      <div class="cart-item-card" *ngFor="let item of cartItems">
+        <div class="item-img-wrap">
+          <img [src]="item.product.imageURL" [alt]="item.product.name">
+        </div>
+        <div class="item-details">
+          <h4>{{ item.product.name }}</h4>
+          <span class="item-brand">{{ item.product.brand }} • {{ item.product.category }}</span>
+          <div class="item-price">
+            ₹{{ item.product.discountPrice || item.product.price }}
+          </div>
+        </div>
+        <div class="quantity-controls">
+          <button (click)="decreaseQuantity(item)" class="qty-btn">−</button>
+          <span class="qty-val">{{ item.quantity }}</span>
+          <button (click)="increaseQuantity(item)" class="qty-btn">+</button>
+        </div>
+        <div class="item-subtotal">
+          ₹{{ (item.product.discountPrice || item.product.price) * item.quantity }}
+        </div>
+        <button (click)="removeItem(item)" class="remove-btn" title="Remove Item">✕</button>
+      </div>
+    </div>
+
+    <!-- CHECKOUT & ADDRESS SECTION -->
+    <div class="checkout-section">
+      <div class="summary-card">
+        <h3>Order Summary</h3>
+        <div class="summary-row">
+          <span>Subtotal ({{ totalCount }} items)</span>
+          <span>₹{{ totalPrice }}</span>
+        </div>
+        <div class="summary-row">
+          <span>Shipping & Delivery</span>
+          <span class="free-text">FREE</span>
+        </div>
+        <div class="summary-row total-row">
+          <span>Total Payable</span>
+          <span class="total-price">₹{{ totalPrice }}</span>
+        </div>
+
+        <hr class="divider">
+
+        <h4>Shipping & Delivery Address</h4>
+        <form (ngSubmit)="placeOrder()">
+          <div class="form-group">
+            <label>Full Name *</label>
+            <input type="text" [(ngModel)]="shippingAddress.fullName" name="fullName" required class="form-input" placeholder="e.g. John Doe">
+          </div>
+          <div class="form-group">
+            <label>Email Address *</label>
+            <input type="email" [(ngModel)]="shippingAddress.email" name="email" required class="form-input" placeholder="e.g. user@ekart.com">
+          </div>
+          <div class="form-group">
+            <label>Phone Number *</label>
+            <input type="tel" [(ngModel)]="shippingAddress.phone" name="phone" required class="form-input" placeholder="e.g. +91 9876543210">
+          </div>
+          <div class="form-group">
+            <label>Flat / House No. / Street Address *</label>
+            <input type="text" [(ngModel)]="shippingAddress.address" name="address" required class="form-input" placeholder="e.g. 123 Tech Park, MG Road">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>City *</label>
+              <input type="text" [(ngModel)]="shippingAddress.city" name="city" required class="form-input" placeholder="e.g. Bengaluru">
+            </div>
+            <div class="form-group">
+              <label>Postal Code</label>
+              <input type="text" [(ngModel)]="shippingAddress.pincode" name="pincode" class="form-input" placeholder="e.g. 560001">
+            </div>
+          </div>
+
+          <button type="submit" [disabled]="isProcessing" class="btn btn-primary checkout-btn">
+            {{ isProcessing ? 'Processing Order...' : 'Proceed to Checkout & Place Order' }}
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

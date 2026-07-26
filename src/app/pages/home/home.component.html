@@ -1,0 +1,90 @@
+<div class="home-container">
+  <!-- HERO BANNER -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <span class="hero-badge">🔥 Summer Collection 2026</span>
+      <h1>Redefine Your Style With <span class="highlight">eKart</span></h1>
+      <p>Discover premium footwear, apparel, and lifestyle accessories from world-renowned brands like Nike, Adidas, Puma, and more.</p>
+      <div class="hero-actions">
+        <a routerLink="/products" class="btn btn-primary">Shop Catalog</a>
+        <a routerLink="/order-tracker" class="btn btn-outline">Track Your Order</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card-glow"></div>
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSL7v5qwkXDHAkzLm7cra136dR7EnADq1Nqdg&s" alt="Hero Product" class="hero-img">
+    </div>
+  </section>
+
+  <!-- FEATURES PROMO -->
+  <section class="features-bar">
+    <div class="feature-item">
+      <span class="feature-icon">🚀</span>
+      <div>
+        <h4>Free Express Shipping</h4>
+        <p>On all orders above ₹999</p>
+      </div>
+    </div>
+    <div class="feature-item">
+      <span class="feature-icon">🛡️</span>
+      <div>
+        <h4>30-Day Easy Returns</h4>
+        <p>Hassle-free replacement & refund</p>
+      </div>
+    </div>
+    <div class="feature-item">
+      <span class="feature-icon">🔒</span>
+      <div>
+        <h4>Secure Payments</h4>
+        <p>Spring Security & JWT encrypted</p>
+      </div>
+    </div>
+    <div class="feature-item">
+      <span class="feature-icon">💬</span>
+      <div>
+        <h4>24/7 Dedicated Support</h4>
+        <p>Instant help desk assistant</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES SECTION -->
+  <section class="section-container">
+    <div class="section-header">
+      <h2>Explore Popular Categories</h2>
+      <p>Browse by curated sport, lifestyle and fashion styles</p>
+    </div>
+    <div class="category-grid">
+      <div class="category-card" *ngFor="let cat of categories">
+        <span class="cat-icon">{{ cat.icon }}</span>
+        <h3>{{ cat.name }}</h3>
+        <p>{{ cat.description }}</p>
+        <a routerLink="/products" class="cat-link">Explore Category &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED PRODUCTS -->
+  <section class="section-container">
+    <div class="section-header">
+      <h2>Featured Arrivals</h2>
+      <p>Hand-picked trending items direct from our Spring Boot backend store</p>
+    </div>
+    <div class="featured-grid">
+      <div class="product-card" *ngFor="let prod of featuredProducts">
+        <div class="card-img-wrap">
+          <img [src]="prod.imageURL" [alt]="prod.name">
+          <span class="brand-badge">{{ prod.brand }}</span>
+        </div>
+        <div class="card-body">
+          <h4>{{ prod.name }}</h4>
+          <div class="price-row">
+            <span class="current-price">₹{{ prod.discountPrice || prod.price }}</span>
+            <span class="old-price" *ngIf="prod.discountPrice">₹{{ prod.price }}</span>
+          </div>
+          <a routerLink="/products" class="btn btn-sm btn-primary">View Details</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

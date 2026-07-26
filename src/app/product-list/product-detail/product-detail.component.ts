@@ -1,37 +1,43 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { Product } from 'src/app/Modals/Product';
-import { ProductItemsComponent } from '../product-items/product-items.component';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'product-detail',
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.css']
 })
-export class ProductDetailComponent {
+export class ProductDetailComponent implements OnInit, OnDestroy {
+  @Input() product!: Product;
+  @Output() closeModal = new EventEmitter<void>();
 
-  // @Input() productListComp: ProductItemsComponent = undefined;
-  @Input() product: Product;
-@Output() closeModal = new EventEmitter<void>();
+  addedToCart = false;
 
-ngOnInit() {
-  document.body.classList.add('modal-open');
-}
+  constructor(private cartService: CartService) {}
 
-ngOnDestroy() {
-  document.body.classList.remove('modal-open');
-}
+  ngOnInit() {
+    document.body.classList.add('modal-open');
+  }
 
-onClose() {
-  this.closeModal.emit();
-}
+  ngOnDestroy() {
+    document.body.classList.remove('modal-open');
+  }
 
+  onClose() {
+    this.closeModal.emit();
+  }
 
-  // product: Product;
+  addToCart() {
+    if (this.product) {
+      this.cartService.addToCart(this.product, 1);
+      this.addedToCart = true;
+      setTimeout(() => {
+        this.addedToCart = false;
+      }, 2500);
+    }
+  }
 
-  // ngOnInit(){
-  //   this.product = this.productListComp.selectedProduct; 
-  // }
-  
-  
-
+  onImgError(event: any) {
+    event.target.src = 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop&q=80';
+  }
 }

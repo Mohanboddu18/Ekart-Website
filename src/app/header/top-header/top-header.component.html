@@ -1,6 +1,20 @@
-<div class="container">
-      <a href="" >Help</a>
-      <a href="#" >Exchange & Return</a>
-      <a href="" >Order Tracker</a>
-      <a href="" >SignUp / Login</a>
+<div class="top-header-container">
+  <div class="top-nav-links">
+    <a routerLink="/help" routerLinkActive="active">Help</a>
+    <a routerLink="/exchange-return" routerLinkActive="active">Exchange & Return</a>
+    <a routerLink="/order-tracker" routerLinkActive="active">Order Tracker</a>
+
+    <a routerLink="/cart" routerLinkActive="active" class="cart-nav-link">
+      🛒 Cart <span class="cart-badge">{{ (cartCount$ | async) || 0 }}</span>
+    </a>
+    
+    <ng-container *ngIf="!currentUser">
+      <a routerLink="/auth" routerLinkActive="active" class="auth-btn">SignUp / Login</a>
+    </ng-container>
+    
+    <ng-container *ngIf="currentUser">
+      <span class="user-badge">👤 Hello, {{ currentUser.name }}</span>
+      <a (click)="logout()" class="logout-link">Logout</a>
+    </ng-container>
   </div>
+</div>

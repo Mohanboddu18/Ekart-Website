@@ -1,0 +1,134 @@
+.auth-page {
+  font-family: 'Inter', -apple-system, sans-serif;
+  padding: 3rem 8%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+}
+
+.auth-box {
+  width: 100%;
+  max-width: 480px;
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 20px;
+  padding: 2.5rem;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.06);
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.auth-header h2 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #0F172A;
+  margin-bottom: 0.5rem;
+}
+
+.auth-header .highlight {
+  color: #38BDF8;
+}
+
+.auth-header p {
+  color: #64748B;
+  font-size: 0.9rem;
+}
+
+.tab-header {
+  display: flex;
+  border-bottom: 2px solid #F1F5F9;
+  margin-bottom: 1.5rem;
+}
+
+.tab-header button {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 12px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #94A3B8;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+}
+
+.tab-header button.active {
+  color: #0284C7;
+  border-bottom-color: #0284C7;
+}
+
+.form-group {
+  margin-bottom: 1.2rem;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #334155;
+  margin-bottom: 6px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #CBD5E1;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.form-input:focus {
+  border-color: #38BDF8;
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+}
+
+.demo-credentials {
+  background: #F8FAFC;
+  border: 1px dashed #CBD5E1;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: #475569;
+  margin-bottom: 1.2rem;
+}
+
+.submit-btn {
+  width: 100%;
+  background: #0284C7;
+  color: white;
+  border: none;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  background: #0369A1;
+}
+
+.alert-success {
+  background: #DCFCE7;
+  color: #15803D;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  margin-bottom: 1rem;
+}
+
+.alert-danger {
+  background: #FEE2E2;
+  color: #B91C1C;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  margin-bottom: 1rem;
+}

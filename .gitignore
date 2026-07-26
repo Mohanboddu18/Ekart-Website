@@ -4,6 +4,16 @@
 /tmp
 /out-tsc
 /bazel-out
+/dist
+/dist/*
+
+# Maven Build Artifacts
+**/target/
+ekart-backend/target/
+*.jar
+*.war
+*.ear
+*.class
 
 # Node
 /node_modules
