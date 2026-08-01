@@ -1,0 +1,84 @@
+<div class="top-header-container">
+  <!-- CUSTOMER TOP NAV (Customer / Unauthenticated View) -->
+  <div class="top-nav-links" *ngIf="!currentUser || (currentUser.role !== 'ROLE_ADMIN' && currentUser.role !== 'ROLE_DELIVERY' && currentUser.role !== 'ROLE_DELIVERY_BOY')">
+    <a routerLink="/help" routerLinkActive="active">Help</a>
+    <a routerLink="/exchange-return" routerLinkActive="active">Exchange & Return</a>
+    <a routerLink="/order-tracker" routerLinkActive="active">Order Tracker</a>
+
+    <a routerLink="/cart" routerLinkActive="active" class="cart-nav-link">
+      🛒 Cart <span class="cart-badge">{{ (cartCount$ | async) || 0 }}</span>
+    </a>
+    
+    <ng-container *ngIf="!currentUser">
+      <a routerLink="/auth" routerLinkActive="active" class="auth-btn">SignUp / Login</a>
+    </ng-container>
+    
+    <ng-container *ngIf="currentUser">
+      <button class="notification-bell-btn" (click)="toggleNotifications()" title="View Notifications & Order Messages">
+        🔔 Messages <span class="notif-badge" *ngIf="notifications.length > 0">{{ notifications.length }}</span>
+      </button>
+
+      <span class="user-badge">
+        👤 Hello, <strong>{{ currentUser.name }}</strong>
+      </span>
+      <a (click)="logout()" class="logout-link">Logout</a>
+    </ng-container>
+  </div>
+
+  <!-- ADMIN PORTAL TOP NAV (Admin View) -->
+  <div class="top-nav-links admin-top-nav" *ngIf="currentUser && currentUser.role === 'ROLE_ADMIN'">
+    <div class="admin-brand">
+      🛡️ <strong>eKart Administration Portal</strong>
+    </div>
+    <div class="admin-user-controls">
+      <button class="notification-bell-btn admin-notif-btn" (click)="toggleNotifications()" title="View Admin Messages">
+        🔔 Admin Messages <span class="notif-badge">{{ notifications.length }}</span>
+      </button>
+
+      <span class="user-badge">
+        Admin: <strong>{{ currentUser.name }}</strong>
+      </span>
+      <a (click)="logout()" class="logout-link">Logout</a>
+    </div>
+  </div>
+
+  <!-- DELIVERY EXECUTIVE PORTAL TOP NAV (Delivery Executive View) -->
+  <div class="top-nav-links admin-top-nav delivery-top-nav" *ngIf="currentUser && (currentUser.role === 'ROLE_DELIVERY' || currentUser.role === 'ROLE_DELIVERY_BOY')">
+    <div class="admin-brand delivery-brand">
+      🚚 <strong>eKart Delivery Executive Portal</strong>
+    </div>
+    <div class="admin-user-controls">
+      <button class="notification-bell-btn delivery-notif-btn" (click)="toggleNotifications()" title="View Delivery Instructions">
+        🔔 Delivery Messages <span class="notif-badge">{{ notifications.length }}</span>
+      </button>
+
+      <span class="user-badge delivery-user-badge">
+        Agent: <strong>{{ currentUser.name }}</strong>
+      </span>
+      <a (click)="logout()" class="logout-link">Logout</a>
+    </div>
+  </div>
+
+  <!-- NOTIFICATION MESSAGES DROPDOWN MODAL -->
+  <div class="notif-dropdown-modal" *ngIf="isNotificationOpen">
+    <div class="notif-dropdown-header">
+      <h4>📬 Order Messages & System Alerts</h4>
+      <button class="close-notif-btn" (click)="isNotificationOpen = false">✕</button>
+    </div>
+
+    <div class="notif-list" *ngIf="notifications.length > 0">
+      <div class="notif-item" *ngFor="let item of notifications">
+        <div class="notif-title">
+          <strong>{{ item.title || 'Order Update' }}</strong>
+          <span class="notif-order-id">#{{ item.orderId }}</span>
+        </div>
+        <p class="notif-msg">{{ item.message }}</p>
+        <span class="notif-time">{{ item.timestamp | date:'shortTime' }} • {{ item.timestamp | date:'mediumDate' }}</span>
+      </div>
+    </div>
+
+    <div class="empty-notif" *ngIf="notifications.length === 0">
+      📭 No new notification messages.
+    </div>
+  </div>
+</div>

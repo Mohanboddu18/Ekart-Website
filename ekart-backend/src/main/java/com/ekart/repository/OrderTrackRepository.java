@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.List;
 
 @Repository
-public interface OrderTrackRepository extends JpaRepository<OrderTrack, Long> {
+public interface OrderTrackRepository extends JpaRepository<OrderTrack, String> {
     Optional<OrderTrack> findByOrderIdIgnoreCase(String orderId);
     List<OrderTrack> findByCustomerEmailIgnoreCase(String customerEmail);
 }

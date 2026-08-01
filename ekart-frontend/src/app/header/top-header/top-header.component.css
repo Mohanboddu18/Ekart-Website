@@ -1,0 +1,253 @@
+.top-header-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 8px 6%;
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  background-color: #0F172A;
+  color: #94A3B8;
+  font-size: 0.85rem;
+  position: relative;
+}
+
+.top-nav-links {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.top-nav-links a {
+  color: #CBD5E1;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+  cursor: pointer;
+}
+
+.top-nav-links a:hover, .top-nav-links a.active {
+  color: #38BDF8;
+}
+
+.cart-nav-link {
+  background: rgba(2, 132, 199, 0.2);
+  color: #38BDF8 !important;
+  font-weight: 700 !important;
+  padding: 4px 12px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid rgba(56, 189, 248, 0.4);
+}
+
+.cart-nav-link:hover {
+  background: rgba(2, 132, 199, 0.4);
+}
+
+.cart-badge {
+  background: #0284C7;
+  color: #FFFFFF;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 10px;
+}
+
+.notification-bell-btn {
+  background: #1E293B;
+  color: #F8FAFC;
+  border: 1px solid #334155;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-weight: 700;
+  font-size: 0.82rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.notification-bell-btn:hover {
+  background: #334155;
+  border-color: #38BDF8;
+}
+
+.admin-notif-btn {
+  background: #4C1D95;
+  border-color: #6D28D9;
+}
+
+.delivery-notif-btn {
+  background: #78350F;
+  border-color: #B45309;
+}
+
+.notif-badge {
+  background: #EF4444;
+  color: #FFFFFF;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 1px 6px;
+  border-radius: 10px;
+}
+
+.auth-btn {
+  background: #38BDF8;
+  color: #0F172A !important;
+  font-weight: 700 !important;
+  padding: 4px 12px;
+  border-radius: 14px;
+}
+
+.auth-btn:hover {
+  background: #0EA5E9;
+}
+
+.user-badge {
+  color: #38BDF8;
+  font-weight: 600;
+}
+
+.logout-link {
+  color: #F87171 !important;
+}
+
+.logout-link:hover {
+  text-decoration: underline;
+}
+
+.admin-top-nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-brand {
+  font-size: 1.05rem;
+  color: #F8FAFC;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-user-controls {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+/* NOTIFICATION DROPDOWN MODAL */
+.notif-dropdown-modal {
+  position: absolute;
+  top: 45px;
+  right: 5%;
+  width: 380px;
+  max-height: 480px;
+  background: #1E293B;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  z-index: 99999;
+  overflow-y: auto;
+  padding: 1rem;
+}
+
+.notif-dropdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #334155;
+  padding-bottom: 8px;
+  margin-bottom: 10px;
+}
+
+.notif-dropdown-header h4 {
+  margin: 0;
+  color: #F8FAFC;
+  font-size: 0.95rem;
+}
+
+.close-notif-btn {
+  background: transparent;
+  border: none;
+  color: #94A3B8;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.notif-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.notif-item {
+  background: #0F172A;
+  border-left: 4px solid #38BDF8;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.notif-title {
+  display: flex;
+  justify-content: space-between;
+  color: #F8FAFC;
+  font-size: 0.85rem;
+  margin-bottom: 4px;
+}
+
+.notif-order-id {
+  color: #38BDF8;
+  font-weight: 700;
+}
+
+.notif-msg {
+  color: #CBD5E1;
+  font-size: 0.82rem;
+  margin: 0 0 4px 0;
+  line-height: 1.3;
+}
+
+.notif-time {
+  color: #64748B;
+  font-size: 0.72rem;
+}
+
+.empty-notif {
+  text-align: center;
+  color: #94A3B8;
+  padding: 1.5rem 0;
+}
+
+@media (max-width: 768px) {
+  .top-header-container {
+    justify-content: flex-start;
+    padding: 6px 12px;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .top-header-container::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .top-nav-links {
+    gap: 0.8rem;
+    font-size: 0.78rem;
+  }
+
+  .top-nav-links a {
+    flex-shrink: 0;
+  }
+
+  .notif-dropdown-modal {
+    width: 300px;
+    right: 2%;
+  }
+}

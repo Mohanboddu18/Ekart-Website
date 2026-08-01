@@ -1,0 +1,2 @@
+-- Default SQL data initialization script disabled.
+-- Data can be managed manually in MySQL by the user or through API endpoints.

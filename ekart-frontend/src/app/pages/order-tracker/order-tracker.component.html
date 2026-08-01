@@ -1,0 +1,382 @@
+<div class="tracker-page">
+  <div class="tracker-header">
+    <h1>Order Fulfillment & <span class="highlight">Status Tracker</span></h1>
+    <p>Real-time order tracking for customers, store pickup execution for delivery agents, and order management for administrators.</p>
+  </div>
+
+  <!-- NAVIGATION TABS -->
+  <div class="tracker-tabs">
+    <button [class.active]="activeTab === 'search'" (click)="switchTab('search')">
+      🔍 Track by Order ID
+    </button>
+    <button *ngIf="authService.isLoggedIn && !authService.isAdmin && !authService.isDeliveryBoy" [class.active]="activeTab === 'my-orders'" (click)="switchTab('my-orders')">
+      📋 My Orders ({{ userOrders.length }})
+    </button>
+    <button *ngIf="authService.isDeliveryBoy" [class.active]="activeTab === 'delivery-panel'" (click)="switchTab('delivery-panel')" class="delivery-tab-btn">
+      🚚 Delivery Boy Dashboard
+    </button>
+    <button *ngIf="authService.isAdmin" [class.active]="activeTab === 'admin-panel'" (click)="switchTab('admin-panel')" class="admin-tab-btn">
+      🛡️ Admin Orders Dashboard
+    </button>
+  </div>
+
+  <!-- TAB 1: SEARCH ORDER ID -->
+  <div *ngIf="activeTab === 'search'">
+    <div class="search-card">
+      <div class="search-form">
+        <input type="text" [(ngModel)]="searchOrderId" placeholder="Enter Order ID (e.g. EK1004)..." class="search-input">
+        <button (click)="onTrackOrder()" [disabled]="loading" class="btn btn-primary">
+          {{ loading ? 'Searching...' : 'Track Order' }}
+        </button>
+      </div>
+    </div>
+
+    <div class="alert alert-danger" *ngIf="errorMessage">
+      ⚠️ {{ errorMessage }}
+    </div>
+
+    <!-- TRACKED ORDER CARD -->
+    <div class="order-details-card" *ngIf="orderData">
+      <div class="card-top-bar">
+        <div>
+          <h2>Order #{{ orderData.orderId }}</h2>
+          <span class="tracking-no">Tracking #: {{ orderData.trackingNumber || 'N/A' }}</span>
+        </div>
+        <div class="status-pill" [class.delivered]="orderData.status === 'DELIVERED'" [class.shipped]="orderData.status === 'SHIPPED'" [class.out-for-delivery]="orderData.status === 'OUT_FOR_DELIVERY'">
+          {{ formatStatusBadge(orderData.status) }}
+        </div>
+      </div>
+
+      <!-- TIMELINE PROGRESS STEPPER -->
+      <div class="timeline">
+        <div class="timeline-step" [class.completed]="isStepCompleted('ORDER_RECEIVED')">
+          <div class="step-circle">✓</div>
+          <div class="step-info">
+            <h5>Order Placed</h5>
+            <p>Received by eKart</p>
+          </div>
+        </div>
+
+        <div class="timeline-step" [class.completed]="isStepCompleted('ACCEPTED')">
+          <div class="step-circle">✓</div>
+          <div class="step-info">
+            <h5>Order Accepted</h5>
+            <p>Approved by Admin</p>
+          </div>
+        </div>
+
+        <div class="timeline-step" [class.completed]="isStepCompleted('SHIPPED')">
+          <div class="step-circle">✓</div>
+          <div class="step-info">
+            <h5>Handed to Delivery Store</h5>
+            <p>{{ orderData.carrier || 'Logistics Partner' }}</p>
+          </div>
+        </div>
+
+        <div class="timeline-step" [class.completed]="isStepCompleted('OUT_FOR_DELIVERY')">
+          <div class="step-circle">✓</div>
+          <div class="step-info">
+            <h5>Out for Delivery</h5>
+            <p>On the way to home</p>
+          </div>
+        </div>
+
+        <div class="timeline-step" [class.completed]="isStepCompleted('DELIVERED')">
+          <div class="step-circle">✓</div>
+          <div class="step-info">
+            <h5>Delivered to Home</h5>
+            <p>Successfully delivered</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="details-grid">
+        <div class="detail-item">
+          <span class="label">Customer Name</span>
+          <span class="val">{{ orderData.customerName || 'Valued Customer' }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Delivery Executive</span>
+          <span class="val">{{ orderData.deliveryBoyName || 'eKart Agent' }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Estimated Delivery</span>
+          <span class="val highlight-val">{{ orderData.estimatedDelivery || 'Within 7 Days' }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Shipping Address</span>
+          <span class="val">{{ orderData.shippingAddress }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="label">Total Amount</span>
+          <span class="val">₹{{ orderData.totalAmount }}</span>
+        </div>
+      </div>
+
+      <!-- ORDER ACTIVITY & MESSAGES THREAD -->
+      <div class="order-messages-thread" *ngIf="orderHistory.length > 0">
+        <h3>💬 Order Activity & Message History</h3>
+        <div class="message-timeline">
+          <div class="message-card" *ngFor="let item of orderHistory">
+            <div class="message-header">
+              <span class="sender-tag" [class.admin-tag]="item.senderRole === 'ADMIN'" [class.delivery-tag]="item.senderRole === 'DELIVERY'">
+                {{ item.senderRole || 'SYSTEM' }}
+              </span>
+              <span class="message-title">{{ item.title }}</span>
+              <span class="message-time">{{ item.timestamp | date:'shortTime' }} • {{ item.timestamp | date:'shortDate' }}</span>
+            </div>
+            <p class="message-body">{{ item.message }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: MY ORDERS (USER VIEW) -->
+  <div *ngIf="activeTab === 'my-orders'">
+    <div class="section-card">
+      <h2>My Order History</h2>
+      <p class="sub-text">Check your current shipments and track real-time delivery status.</p>
+
+      <div *ngIf="userOrdersLoading" class="loading-state">Loading your orders...</div>
+
+      <div *ngIf="!userOrdersLoading && userOrders.length === 0" class="empty-state">
+        🛒 You have not placed any orders yet. <a routerLink="/products">Start shopping now!</a>
+      </div>
+
+      <div class="user-order-card" *ngFor="let order of userOrders">
+        <div class="card-top-bar">
+          <div>
+            <h3>Order #{{ order.orderId }}</h3>
+            <span class="order-date">Placed on: {{ order.orderDate | date:'mediumDate' }}</span>
+          </div>
+          <div class="status-pill" [class.delivered]="order.status === 'DELIVERED'" [class.shipped]="order.status === 'SHIPPED'" [class.out-for-delivery]="order.status === 'OUT_FOR_DELIVERY'">
+            {{ formatStatusBadge(order.status) }}
+          </div>
+        </div>
+
+        <div class="timeline mini-timeline">
+          <div class="timeline-step" [class.completed]="isStepCompleted('ORDER_RECEIVED', order)">
+            <div class="step-circle">✓</div>
+            <div class="step-info"><h5>Received</h5></div>
+          </div>
+          <div class="timeline-step" [class.completed]="isStepCompleted('ACCEPTED', order)">
+            <div class="step-circle">✓</div>
+            <div class="step-info"><h5>Accepted</h5></div>
+          </div>
+          <div class="timeline-step" [class.completed]="isStepCompleted('SHIPPED', order)">
+            <div class="step-circle">✓</div>
+            <div class="step-info"><h5>Handed to Delivery</h5></div>
+          </div>
+          <div class="timeline-step" [class.completed]="isStepCompleted('OUT_FOR_DELIVERY', order)">
+            <div class="step-circle">✓</div>
+            <div class="step-info"><h5>Out for Delivery</h5></div>
+          </div>
+          <div class="timeline-step" [class.completed]="isStepCompleted('DELIVERED', order)">
+            <div class="step-circle">✓</div>
+            <div class="step-info"><h5>Delivered</h5></div>
+          </div>
+        </div>
+
+        <div class="user-order-meta">
+          <div>📍 <strong>Address:</strong> {{ order.shippingAddress }}</div>
+          <div>🛵 <strong>Delivery Executive:</strong> {{ order.deliveryBoyName || 'Assigned to eKart Logistics' }}</div>
+          <div>📅 <strong>Expected Delivery:</strong> {{ order.estimatedDelivery || 'Within 7 Days' }}</div>
+          <div>💰 <strong>Total Amount:</strong> ₹{{ order.totalAmount }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3: DELIVERY BOY DASHBOARD -->
+  <div *ngIf="activeTab === 'delivery-panel'">
+    <div class="admin-dashboard-card delivery-dashboard-card">
+      <div class="admin-header-row">
+        <div>
+          <h2>🚚 Delivery Executive Portal</h2>
+          <p>Pick up accepted orders from store and accept Out for Delivery dispatch on reaching customer address.</p>
+        </div>
+        <button (click)="loadDeliveryOrders()" class="btn btn-outline">🔄 Refresh Deliveries</button>
+      </div>
+
+      <!-- DELIVERY FILTER BUTTONS -->
+      <div class="admin-filter-bar">
+        <button [class.active]="deliveryFilterStatus === 'ALL'" (click)="deliveryFilterStatus = 'ALL'">All Orders ({{ deliveryOrders.length }})</button>
+        <button [class.active]="deliveryFilterStatus === 'ACCEPTED'" (click)="deliveryFilterStatus = 'ACCEPTED'">🟢 Ready for Store Pickup</button>
+        <button [class.active]="deliveryFilterStatus === 'SHIPPED'" (click)="deliveryFilterStatus = 'SHIPPED'">📦 Picked Up at Store</button>
+        <button [class.active]="deliveryFilterStatus === 'OUT_FOR_DELIVERY'" (click)="deliveryFilterStatus = 'OUT_FOR_DELIVERY'">🛵 In Delivery to Home</button>
+        <button [class.active]="deliveryFilterStatus === 'DELIVERED'" (click)="deliveryFilterStatus = 'DELIVERED'">✅ Delivered</button>
+      </div>
+
+      <div *ngIf="deliveryOrdersLoading" class="loading-state">Loading delivery assignments...</div>
+
+      <div *ngIf="!deliveryOrdersLoading && filteredDeliveryOrders.length === 0" class="empty-state">
+        📭 No orders currently pending for this delivery status.
+      </div>
+
+      <!-- DELIVERY ORDERS TABLE -->
+      <div class="admin-table-wrap" *ngIf="!deliveryOrdersLoading && filteredDeliveryOrders.length > 0">
+        <table class="admin-orders-table">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer Name</th>
+              <th>Home Delivery Address</th>
+              <th>Amount</th>
+              <th>Current Status</th>
+              <th>Delivery Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let order of filteredDeliveryOrders">
+              <td>
+                <strong>#{{ order.orderId }}</strong>
+                <div class="trk-num">{{ order.trackingNumber }}</div>
+              </td>
+              <td>
+                <div class="cust-name">{{ order.customerName || 'Customer' }}</div>
+                <div class="cust-email">{{ order.customerEmail }}</div>
+              </td>
+              <td class="addr-cell">
+                📍 <strong>{{ order.shippingAddress }}</strong>
+              </td>
+              <td><strong>₹{{ order.totalAmount }}</strong></td>
+              <td>
+                <span class="status-pill" [class.delivered]="order.status === 'DELIVERED'" [class.shipped]="order.status === 'SHIPPED'" [class.out-for-delivery]="order.status === 'OUT_FOR_DELIVERY'">
+                  {{ formatStatusBadge(order.status) }}
+                </span>
+                <div class="delivery-agent-info" *ngIf="order.deliveryBoyName">
+                  👤 {{ order.deliveryBoyName }}
+                </div>
+              </td>
+              <td class="action-cell">
+                <div class="action-buttons">
+                  <!-- LOCKED BEFORE ADMIN ACCEPTANCE -->
+                  <span *ngIf="order.status === 'ORDER_RECEIVED'" class="locked-status-badge">
+                    ⏳ Waiting for Admin Acceptance
+                  </span>
+
+                  <!-- STEP 1: PICK UP FROM STORE (STATUS -> SHIPPED) -->
+                  <button *ngIf="order.status === 'ACCEPTED'" (click)="pickupOrderFromShop(order)" class="btn-action btn-transit" title="Pick up package from store">
+                    📦 Pick Up from Store
+                  </button>
+
+                  <!-- STEP 2: ACCEPT OUT FOR DELIVERY DISPATCH (STATUS -> OUT_FOR_DELIVERY) -->
+                  <button *ngIf="order.status === 'SHIPPED'" (click)="acceptOutForDelivery(order)" class="btn-action btn-accept" title="Accept dispatch on reaching delivery address area">
+                    🛵 Accept & Start Out for Delivery
+                  </button>
+
+                  <!-- STEP 3: FINISH HOME DELIVERY (STATUS -> DELIVERED) -->
+                  <button *ngIf="order.status === 'OUT_FOR_DELIVERY'" (click)="completeHomeDelivery(order)" class="btn-action btn-deliver" title="Finish delivery to customer home">
+                    ✅ Finish Delivery to Home
+                  </button>
+
+                  <span *ngIf="order.status === 'DELIVERED'" class="delivered-text">
+                    🎉 Delivered & Complete
+                  </span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 4: ADMIN ORDERS DASHBOARD -->
+  <div *ngIf="activeTab === 'admin-panel'">
+    <div class="admin-dashboard-card">
+      <div class="admin-header-row">
+        <div>
+          <h2>🛡️ Admin Order Fulfillment Dashboard</h2>
+          <p>Accept orders from customers and monitor delivery executive fulfillment.</p>
+        </div>
+        <button (click)="loadAdminOrders()" class="btn btn-outline">🔄 Refresh Orders</button>
+      </div>
+
+      <!-- STATUS FILTER BUTTONS -->
+      <div class="admin-filter-bar">
+        <button [class.active]="adminFilterStatus === 'ALL'" (click)="adminFilterStatus = 'ALL'">All Orders ({{ adminOrders.length }})</button>
+        <button [class.active]="adminFilterStatus === 'ORDER_RECEIVED'" (click)="adminFilterStatus = 'ORDER_RECEIVED'">📌 New Orders</button>
+        <button [class.active]="adminFilterStatus === 'ACCEPTED'" (click)="adminFilterStatus = 'ACCEPTED'">🟢 Accepted</button>
+        <button [class.active]="adminFilterStatus === 'SHIPPED'" (click)="adminFilterStatus = 'SHIPPED'">📦 Store Pickup Done</button>
+        <button [class.active]="adminFilterStatus === 'OUT_FOR_DELIVERY'" (click)="adminFilterStatus = 'OUT_FOR_DELIVERY'">🛵 Out for Delivery</button>
+        <button [class.active]="adminFilterStatus === 'DELIVERED'" (click)="adminFilterStatus = 'DELIVERED'">✅ Delivered</button>
+      </div>
+
+      <div *ngIf="adminOrdersLoading" class="loading-state">Loading customer orders...</div>
+
+      <div *ngIf="!adminOrdersLoading && filteredAdminOrders.length === 0" class="empty-state">
+        📭 No customer orders found for this status.
+      </div>
+
+      <!-- ADMIN ORDERS TABLE -->
+      <div class="admin-table-wrap" *ngIf="!adminOrdersLoading && filteredAdminOrders.length > 0">
+        <table class="admin-orders-table">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer</th>
+              <th>Shipping Address</th>
+              <th>Total</th>
+              <th>Assigned Delivery Executive</th>
+              <th>Current Status</th>
+              <th>Admin Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let order of filteredAdminOrders">
+              <td>
+                <strong>#{{ order.orderId }}</strong>
+                <div class="trk-num">{{ order.trackingNumber }}</div>
+              </td>
+              <td>
+                <div class="cust-name">{{ order.customerName || 'Customer' }}</div>
+                <div class="cust-email">{{ order.customerEmail }}</div>
+              </td>
+              <td class="addr-cell">{{ order.shippingAddress }}</td>
+              <td><strong>₹{{ order.totalAmount }}</strong></td>
+              <td>
+                <div class="cust-name">{{ order.deliveryBoyName || 'Unassigned' }}</div>
+                <div class="cust-email" *ngIf="order.deliveryBoyPhone">{{ order.deliveryBoyPhone }}</div>
+              </td>
+              <td>
+                <span class="status-pill" [class.delivered]="order.status === 'DELIVERED'" [class.shipped]="order.status === 'SHIPPED'" [class.out-for-delivery]="order.status === 'OUT_FOR_DELIVERY'">
+                  {{ formatStatusBadge(order.status) }}
+                </span>
+              </td>
+              <td class="action-cell">
+                <div class="action-buttons">
+                  <!-- STEP 1: ADMIN ACCEPTS CUSTOMER REQUEST -->
+                  <button *ngIf="order.status === 'ORDER_RECEIVED'" (click)="updateOrderStatusAdmin(order, 'ACCEPTED')" class="btn-action btn-accept" title="Accept Customer Order">
+                    🟢 Accept Order
+                  </button>
+
+                  <!-- STEP 2: ORDER ACCEPTED (AWAITING DELIVERY BOY SHOP PICKUP) -->
+                  <span *ngIf="order.status === 'ACCEPTED'" class="accepted-wait-text">
+                    📢 Accepted (Awaiting Store Pickup)
+                  </span>
+
+                  <!-- STEP 3: PICKED UP BY DELIVERY BOY (STORE HANDOVER COMPLETE) -->
+                  <span *ngIf="order.status === 'SHIPPED'" class="handover-text">
+                    📦 Picked Up at Store (Awaiting Out for Delivery Accept)
+                  </span>
+
+                  <!-- STEP 4: OUT FOR DELIVERY DISPATCH ACCEPTED BY DELIVERY BOY -->
+                  <span *ngIf="order.status === 'OUT_FOR_DELIVERY'" class="out-delivery-text">
+                    🛵 Out for Delivery (En Route to Customer Home)
+                  </span>
+
+                  <!-- STEP 5: COMPLETED DELIVERY -->
+                  <span *ngIf="order.status === 'DELIVERED'" class="delivered-text">
+                    🎉 Delivered & Complete
+                  </span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

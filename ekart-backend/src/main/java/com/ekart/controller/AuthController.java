@@ -78,12 +78,16 @@ public class AuthController {
                     .build());
         }
 
+        String userRole = (registerRequest.getRole() != null && !registerRequest.getRole().trim().isEmpty())
+                ? registerRequest.getRole().trim()
+                : "ROLE_USER";
+
         User user = User.builder()
                 .name(registerRequest.getName())
                 .email(registerRequest.getEmail())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
                 .phone(registerRequest.getPhone())
-                .role("ROLE_USER")
+                .role(userRole)
                 .build();
 
         userRepository.save(user);
