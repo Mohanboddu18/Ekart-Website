@@ -70,7 +70,7 @@
       <h2>Featured Arrivals</h2>
       <p>Hand-picked trending items direct from our Spring Boot backend store</p>
     </div>
-    <div class="featured-grid">
+    <div *ngIf="featuredProducts.length > 0" class="featured-grid">
       <div class="product-card" *ngFor="let prod of featuredProducts">
         <div class="card-img-wrap">
           <img [src]="prod.imageURL" [alt]="prod.name">
@@ -85,6 +85,9 @@
           <a routerLink="/products" class="btn btn-sm btn-primary">View Details</a>
         </div>
       </div>
+    </div>
+    <div *ngIf="featuredProducts.length === 0" class="no-featured">
+      <p>📦 No featured products available in the database right now.</p>
     </div>
   </section>
 </div>

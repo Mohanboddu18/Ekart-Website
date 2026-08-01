@@ -6,8 +6,21 @@
   (productSelectedButtonChanged)="onFilterChanged($event)">
 </app-filter>
 
+<!-- Loading State -->
+<div *ngIf="loading" class="no-products-container">
+  <div class="spinner"></div>
+  <p>Loading products from database...</p>
+</div>
+
+<!-- Empty State -->
+<div *ngIf="!loading && filteredProducts.length === 0" class="no-products-container">
+  <div class="empty-icon">📦</div>
+  <h3>No Products Found</h3>
+  <p>There are currently no products available in the database.</p>
+</div>
+
 <!-- Product Grid -->
-<div class="ekart--products--container">
+<div *ngIf="!loading && filteredProducts.length > 0" class="ekart--products--container">
   <ng-container *ngFor="let prod of filteredProducts">
     <app-product
       class="ekart--product--card"
@@ -16,3 +29,4 @@
     </app-product>
   </ng-container>
 </div>
+
