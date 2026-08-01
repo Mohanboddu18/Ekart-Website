@@ -4,13 +4,17 @@ import { Observable, of, tap, catchError } from 'rxjs';
 import { OrderTrack } from '../Modals/EkartModels';
 import { ApiResponse } from '../Modals/User';
 
+import { getApiBaseUrl } from '../config/api.config';
+
 @Injectable({
   providedIn: 'root'
 })
 export class OrderTrackerService {
-  private apiUrl = 'http://localhost:8080/api/orders';
+  private get apiUrl(): string {
+    return `${getApiBaseUrl()}/api/orders`;
+  }
 
-  // In-memory store for newly created orders if offline (starts completely empty)
+  // In-memory store for cache (starts completely empty)
   private fallbackOrders: OrderTrack[] = [];
 
   constructor(private http: HttpClient) {}
@@ -29,7 +33,7 @@ export class OrderTrackerService {
         }
         return of({
           success: false,
-          message: err.error?.message || `Order ID '${orderId}' not found.`
+          message: err.error?.message || `Order ID '${orderId}' not found. Please check your order ID.`
         });
       })
     );
@@ -56,24 +60,9 @@ export class OrderTrackerService {
           this.updateFallbackStore(res.data);
         }
       }),
-      catchError(() => {
-        const estDate = new Date();
-        estDate.setDate(estDate.getDate() + 7);
-        const newOrder: OrderTrack = {
-          id: this.fallbackOrders.length + 1,
-          orderId: 'EK' + Math.floor(1000 + Math.random() * 9000),
-          trackingNumber: 'TRK-' + Math.floor(1000000 + Math.random() * 9000000),
-          customerEmail: orderData.customerEmail,
-          customerName: orderData.customerName,
-          shippingAddress: orderData.shippingAddress,
-          totalAmount: orderData.totalAmount,
-          status: 'ORDER_RECEIVED',
-          carrier: 'eKart Express Logistics',
-          estimatedDelivery: estDate.toISOString().split('T')[0],
-          orderDate: new Date().toISOString()
-        };
-        this.fallbackOrders.unshift(newOrder);
-        return of({ success: true, message: 'Order placed successfully!', data: newOrder });
+      catchError(err => {
+        const errMsg = err.error?.message || 'Failed to connect to order server. Please check your backend database connection.';
+        return of({ success: false, message: errMsg });
       })
     );
   }

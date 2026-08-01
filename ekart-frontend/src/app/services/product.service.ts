@@ -3,12 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of, catchError, map } from 'rxjs';
 import { Product } from '../Modals/Product';
 import { ApiResponse } from '../Modals/User';
+import { getApiBaseUrl } from '../config/api.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-  private apiUrl = 'http://localhost:8080/api/products';
+  private get apiUrl(): string {
+    return `${getApiBaseUrl()}/api/products`;
+  }
 
   constructor(private http: HttpClient) {}
 

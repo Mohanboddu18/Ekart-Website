@@ -3,12 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of, catchError } from 'rxjs';
 import { ReturnRequest } from '../Modals/EkartModels';
 import { ApiResponse } from '../Modals/User';
+import { getApiBaseUrl } from '../config/api.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReturnService {
-  private apiUrl = 'http://localhost:8080/api/returns';
+  private get apiUrl(): string {
+    return `${getApiBaseUrl()}/api/returns`;
+  }
 
   constructor(private http: HttpClient) {}
 

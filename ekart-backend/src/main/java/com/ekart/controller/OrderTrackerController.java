@@ -54,54 +54,68 @@ public class OrderTrackerController {
 
     @PostMapping("/create")
     public ResponseEntity<ApiResponse<OrderTrack>> createOrder(@RequestBody OrderCreateRequest request) {
-        String generatedOrderId = "EK" + (1000 + new Random().nextInt(9000));
-        String generatedTracking = "TRK-" + (1000000 + new Random().nextInt(9000000));
-        // EXACT 7-DAY GUARANTEED EXPECTED DELIVERY
-        String estimatedDelivery = LocalDateTime.now().plusDays(7).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        try {
+            String generatedOrderId = "EK" + (1000 + new Random().nextInt(9000));
+            String generatedTracking = "TRK-" + (1000000 + new Random().nextInt(9000000));
+            // EXACT 7-DAY GUARANTEED EXPECTED DELIVERY
+            String estimatedDelivery = LocalDateTime.now().plusDays(7).format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
-        OrderTrack newOrder = OrderTrack.builder()
-                .orderId(generatedOrderId)
-                .trackingNumber(generatedTracking)
-                .customerEmail(request.getCustomerEmail())
-                .customerName(request.getCustomerName())
-                .shippingAddress(request.getShippingAddress())
-                .totalAmount(request.getTotalAmount())
-                .status("ORDER_RECEIVED")
-                .carrier("eKart Express Logistics")
-                .estimatedDelivery(estimatedDelivery)
-                .orderDate(LocalDateTime.now())
-                .build();
+            OrderTrack newOrder = OrderTrack.builder()
+                    .orderId(generatedOrderId)
+                    .trackingNumber(generatedTracking)
+                    .customerEmail(request.getCustomerEmail() != null ? request.getCustomerEmail() : "customer@ekart.com")
+                    .customerName(request.getCustomerName() != null ? request.getCustomerName() : "Valued Customer")
+                    .shippingAddress(request.getShippingAddress() != null ? request.getShippingAddress() : "Address not provided")
+                    .totalAmount(request.getTotalAmount() != null ? request.getTotalAmount() : 0.0)
+                    .status("ORDER_RECEIVED")
+                    .carrier("eKart Express Logistics")
+                    .estimatedDelivery(estimatedDelivery)
+                    .orderDate(LocalDateTime.now())
+                    .build();
 
-        OrderTrack saved = orderTrackRepository.save(newOrder);
+            OrderTrack saved = orderTrackRepository.save(newOrder);
 
-        // 1. Send notification to ADMIN
-        notificationRepository.save(OrderNotification.builder()
-                .orderId(generatedOrderId)
-                .senderRole("CUSTOMER")
-                .recipientRole("ROLE_ADMIN")
-                .title("New Order Placed")
-                .message("New order #" + generatedOrderId + " placed by " + request.getCustomerName() + " (₹" + request.getTotalAmount() + "). Expected Delivery: " + estimatedDelivery + ". Waiting for admin acceptance.")
-                .isRead(false)
-                .timestamp(LocalDateTime.now())
-                .build());
+            // Save notifications safely
+            try {
+                // 1. Send notification to ADMIN
+                notificationRepository.save(OrderNotification.builder()
+                        .orderId(generatedOrderId)
+                        .senderRole("CUSTOMER")
+                        .recipientRole("ROLE_ADMIN")
+                        .title("New Order Placed")
+                        .message("New order #" + generatedOrderId + " placed by " + request.getCustomerName() + " (₹" + request.getTotalAmount() + "). Expected Delivery: " + estimatedDelivery + ". Waiting for admin acceptance.")
+                        .isRead(false)
+                        .timestamp(LocalDateTime.now())
+                        .build());
 
-        // 2. Send notification to CUSTOMER
-        notificationRepository.save(OrderNotification.builder()
-                .orderId(generatedOrderId)
-                .senderRole("SYSTEM")
-                .recipientRole("CUSTOMER")
-                .recipientEmail(request.getCustomerEmail())
-                .title("Order Placed Successfully")
-                .message("Your order #" + generatedOrderId + " has been placed successfully! Expected Delivery Date: " + estimatedDelivery + " (7-Day Guarantee). Status: ORDER_RECEIVED.")
-                .isRead(false)
-                .timestamp(LocalDateTime.now())
-                .build());
+                // 2. Send notification to CUSTOMER
+                notificationRepository.save(OrderNotification.builder()
+                        .orderId(generatedOrderId)
+                        .senderRole("SYSTEM")
+                        .recipientRole("CUSTOMER")
+                        .recipientEmail(request.getCustomerEmail())
+                        .title("Order Placed Successfully")
+                        .message("Your order #" + generatedOrderId + " has been placed successfully! Expected Delivery Date: " + estimatedDelivery + " (7-Day Guarantee). Status: ORDER_RECEIVED.")
+                        .isRead(false)
+                        .timestamp(LocalDateTime.now())
+                        .build());
+            } catch (Exception notifEx) {
+                System.err.println("Notification save warning: " + notifEx.getMessage());
+            }
 
-        return ResponseEntity.ok(ApiResponse.<OrderTrack>builder()
-                .success(true)
-                .message("Order placed successfully!")
-                .data(saved)
-                .build());
+            return ResponseEntity.ok(ApiResponse.<OrderTrack>builder()
+                    .success(true)
+                    .message("Order placed successfully!")
+                    .data(saved)
+                    .build());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body(ApiResponse.<OrderTrack>builder()
+                    .success(false)
+                    .message("Failed to store order in database: " + e.getMessage())
+                    .build());
+        }
     }
 
     @GetMapping("/admin/all")

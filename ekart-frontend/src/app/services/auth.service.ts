@@ -2,12 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, of, tap, catchError } from 'rxjs';
 import { ApiResponse, AuthResponse, User } from '../Modals/User';
+import { getApiBaseUrl } from '../config/api.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8080/api/auth';
+  private get apiUrl(): string {
+    return `${getApiBaseUrl()}/api/auth`;
+  }
   private currentUserSubject = new BehaviorSubject<AuthResponse | null>(this.getStoredUser());
   public currentUser$ = this.currentUserSubject.asObservable();
 

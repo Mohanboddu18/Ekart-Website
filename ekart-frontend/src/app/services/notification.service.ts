@@ -3,12 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, of, catchError } from 'rxjs';
 import { OrderNotification } from '../Modals/EkartModels';
 import { ApiResponse } from '../Modals/User';
+import { getApiBaseUrl } from '../config/api.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationService {
-  private apiUrl = 'http://localhost:8080/api/orders';
+  private get apiUrl(): string {
+    return `${getApiBaseUrl()}/api/orders`;
+  }
 
   private notificationsSubject = new BehaviorSubject<OrderNotification[]>([]);
   public notifications$ = this.notificationsSubject.asObservable();

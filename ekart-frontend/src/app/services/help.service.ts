@@ -3,12 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of, catchError, map } from 'rxjs';
 import { HelpTicket } from '../Modals/EkartModels';
 import { ApiResponse } from '../Modals/User';
+import { getApiBaseUrl } from '../config/api.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HelpService {
-  private apiUrl = 'http://localhost:8080/api/help';
+  private get apiUrl(): string {
+    return `${getApiBaseUrl()}/api/help`;
+  }
 
   constructor(private http: HttpClient) {}
 
